@@ -1,0 +1,9 @@
+<view class="container">
+  <view class="success-box glass-effect">
+    <icon type="success" size="80" color="#07c160"></icon>
+    <view class="success-title heavy-text">工单流转成功</view>
+    <view class="success-desc heavy-text">您的异常申诉已安全加密并递交至系部管理员端，请耐心等待人工审核。审核结果将实时在历史大厅展示。</view>
+  </view>
+  
+  <button class="back-btn heavy-text" bindtap="goBack">返回申诉大厅</button>
+</view>

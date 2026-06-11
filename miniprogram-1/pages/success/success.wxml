@@ -1,0 +1,54 @@
+<view class="page-view success-page">
+  <view class="bg-orbs">
+    <view class="orb orb-g1"></view>
+    <view class="orb orb-g2"></view>
+  </view>
+
+  <view class="success-content">
+    
+    <view class="top-section">
+      <image class="success-icon pulse-anim" src="/assets/chenggong.svg" mode="aspectFit"></image>
+      <view class="success-title">打卡成功！</view>
+    </view>
+
+    <view class="lottery-section">
+      <view class="slot-machine glass-card {{isRolling ? 'rolling-glow' : ''}}">
+        <swiper class="roller" wx:if="{{isRolling}}" vertical="true" autoplay="true" circular="true" interval="80" duration="80" display-multiple-items="1">
+          <swiper-item wx:for="{{lotteryItems}}" wx:key="id">
+            <view class="roller-text blur-text">{{item.name}}</view>
+          </swiper-item>
+        </swiper>
+        
+        <view class="roller-static" wx:else>
+          <text class="result-text {{hasDrawn && prizeInfo.isReward ? 'highlight' : ''}}">
+            {{hasDrawn ? prizeInfo.name : '神秘奖励已就绪，等您开启'}}
+          </text>
+        </view>
+      </view>
+
+      <button class="try-btn {{hasDrawn ? 'disabled' : 'bouncing-btn'}}" bindtap="startLottery">
+        {{hasDrawn ? '今日已抽取' : '🎁 点击抽取专属奖励'}}
+      </button>
+    </view>
+
+    <view class="bottom-section">
+      <view class="quote-card glass-card">
+        <view class="quote-inner">
+          <view class="quote-text">“{{ quote.text }}”</view>
+          <view class="quote-author">—— {{ quote.author }}</view>
+        </view>
+      </view>
+      <button class="btn-go-back" bindtap="goBack">返回打卡首页</button>
+    </view>
+  </view>
+
+  <view class="modal-overlay {{showPrizeModal ? 'show' : ''}}" bindtap="closePrizeModal">
+    <view class="modal-content glass-card prize-box" catchtap="preventClose">
+      <view class="prize-icon">🎉</view>
+      <view class="prize-title">恭喜您获得奖励</view>
+      <view class="prize-name">{{prizeInfo.name}}</view>
+      <view class="prize-desc">奖励已安全打入您的账户，请前往“我的”查收！</view>
+      <button class="prize-btn" bindtap="closePrizeModal">开心收下</button>
+    </view>
+  </view>
+</view>

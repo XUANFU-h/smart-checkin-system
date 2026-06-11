@@ -1,0 +1,30 @@
+page { background-color: var(--bg-color); padding: 40rpx; box-sizing: border-box;}
+/* 💡 强制深色加粗字体类 */
+.heavy-text { color: #000 !important; font-weight: 900 !important; font-family: 'SimSun', '宋体', serif !important; }
+
+.title { font-size: 38rpx; margin-bottom: 40rpx; text-align: center; letter-spacing: 2rpx;}
+.glass-effect { background: #fff; border: 2rpx solid #333; border-radius: 20rpx; padding: 40rpx; margin-bottom: 50rpx; box-shadow: 0 8rpx 20rpx rgba(0,0,0,0.1);}
+
+.info-module { background: #f5f5f5; padding: 30rpx; border-radius: 16rpx; margin-bottom: 40rpx; border: 2rpx solid #ccc; }
+.info-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20rpx; font-size: 28rpx; }
+.info-row:last-child { margin-bottom: 0; }
+.time-text { color: #005500 !important; }
+
+.form-group { margin-bottom: 40rpx; position: relative;}
+.form-group > .label { font-size: 30rpx; margin-bottom: 20rpx; display: block;}
+.required { color: #d00 !important; margin-left: 8rpx; font-size: 30rpx;}
+.optional { color: #666 !important; font-size: 24rpx; font-weight: bold; margin-left: 10rpx;}
+
+.picker-box { background: #f9f9f9; padding: 24rpx; border-radius: 12rpx; font-size: 28rpx; border: 2rpx solid #333;}
+.reason-input { background: #f9f9f9; padding: 24rpx; border-radius: 12rpx; width: 100%; height: 200rpx; font-size: 28rpx; box-sizing: border-box; border: 2rpx solid #333;}
+.word-count { position: absolute; bottom: 20rpx; right: 20rpx; font-size: 24rpx; }
+
+.img-grid { display: flex; flex-wrap: wrap; gap: 20rpx; }
+.img-item { width: 150rpx; height: 150rpx; border-radius: 12rpx; position: relative; overflow: hidden; border: 2rpx solid #333;}
+.img-item image { width: 100%; height: 100%; }
+.del-btn { position: absolute; top: 0; right: 0; background: rgba(0,0,0,0.8); color: #fff; width: 45rpx; height: 45rpx; text-align: center; line-height: 40rpx; border-bottom-left-radius: 12rpx; font-size: 36rpx; font-weight: bold;}
+.add-btn { width: 150rpx; height: 150rpx; border-radius: 12rpx; background: #f9f9f9; border: 4rpx dashed #333; display: flex; justify-content: center; align-items: center; font-size: 70rpx; color: #333; font-weight: bold;}
+
+.submit-btn { background: #000; color: #fff !important; border-radius: 50rpx; width: 100%; height: 90rpx; display: flex; justify-content: center; align-items: center; font-size: 34rpx; box-shadow: 0 10rpx 20rpx rgba(0,0,0,0.3);}
+.submit-btn[disabled] { background: #666; color: #ccc !important; }
+.submit-btn:active { transform: scale(0.98); }

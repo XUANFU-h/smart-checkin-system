@@ -1,0 +1,100 @@
+<view class="page-view profile-page">
+  <view class="container">
+
+    <view class="glass-card user-header">
+      <view class="glass-inner user-header-inner">
+        <view class="user-base-info" bindtap="goToEditProfile">
+          <image class="avatar" src="{{userInfo.avatar || 'http://127.0.0.1:8080/logo.png'}}" mode="aspectFill"></image>
+          <view class="info-content">
+            <view class="nickname">
+              {{userInfo.realName || userInfo.nickname || '未完善用�?}}
+              <text class="user-type-tag {{userTypeClass}}">{{userTypeLabel}}</text>
+            </view>
+            <view class="student-id">学号: {{userInfo.studentId || '未绑�?}}</view>
+          </view>
+          <view class="edit-arrow">></view>
+        </view>
+
+        <view class="divider-line"></view>
+
+        <view class="user-tracks-section">
+          <view class="track-header">
+            <text class="section-label">当前赛道</text>
+            </view>
+          
+          <view class="track-tags" wx:if="{{myTracks.length > 0}}">
+            <view class="track-tag" wx:for="{{myTracks}}" wx:key="id">
+              {{item.icon || '🎯'}} {{item.name}}
+            </view>
+          </view>
+          <view class="empty-track-tip" wx:else>您还未选择任何修行赛道</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="score-panel">
+      <view class="glass-card score-box-wrapper" bindtap="openEmpowermentModal">
+        <view class="glass-inner score-box-inner">
+          <view class="score-label">赋能分总计</view>
+          <view class="score-val emp-color">{{empowermentScore}}</view>
+          <view class="score-tip">点击查看档案</view>
+        </view>
+      </view>
+      <view class="glass-card score-box-wrapper" bindtap="openMoralModal">
+        <view class="glass-inner score-box-inner">
+          <view class="score-label">德育分总计</view>
+          <view class="score-val moral-color">{{moralScore}}</view>
+          <view class="score-tip">点击查看档案</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="glass-card menu-list">
+      <view class="glass-inner menu-list-inner">
+        <view class="menu-item" bindtap="goToPage" data-url="/pages/shop/shop">
+          <text class="menu-icon">🎁</text> 
+          <text class="menu-text">学风驿站</text> 
+          <text class="arrow">></text>
+        </view>
+        <view class="menu-item no-border" bindtap="goToPage" data-url="/pages/appealList/appealList">
+          <text class="menu-icon">⚖️</text> 
+          <text class="menu-text">申诉与反馈大�?/text> 
+          <text class="arrow">></text>
+        </view>
+      </view>
+    </view>
+
+    <view class="footer-copyright">
+      <view class="unit">信息工程学院 · 学习�?/view>
+      <view class="author">宣甫 · 原创</view>
+    </view>
+
+    <view class="bottom-spacer"></view>
+  </view>
+
+  <view class="modal-mask {{showLogModal ? 'show' : ''}}" bindtap="closeModals">
+    <view class="glass-card log-modal-card {{showLogModal ? 'pop-up' : ''}}" catchtap="preventClose">
+      <view class="glass-inner modal-inner-pad">
+        <view class="modal-header">
+          <text class="modal-title">{{currentLogTitle}}变动档案</text>
+          <text class="header-appeal" bindtap="goToPage" data-url="/pages/appeal/appeal">申诉疑问?</text>
+        </view>
+        <view class="total-display {{currentLogClass}}">{{currentTotalScore}}</view>
+        <view class="divider-line"></view>
+        <scroll-view scroll-y class="log-scroll">
+          <view class="empty-tip" wx:if="{{currentLogs.length === 0}}">该项目前暂无变动记录</view>
+          <view class="log-item" wx:for="{{currentLogs}}" wx:key="index">
+            <view class="log-top">
+              <text class="log-index">{{index + 1}}. 变动: {{item.isSub ? '扣除' : '增加'}}</text>
+              <text class="log-score {{item.isSub ? 'score-sub' : 'score-add'}}">{{item.isSub ? '-' : '+'}}{{item.absScore}}</text>
+            </view>
+            <view class="log-detail"><text class="text-gray">事由�?/text>{{item.reason || item.description}}</view>
+            <view class="log-detail"><text class="text-gray">操作人：</text>{{item.displayOperator}}</view>
+            <view class="log-time">{{item.formattedTime}}</view>
+          </view>
+        </scroll-view>
+        <view class="btn-primary close-modal-btn" bindtap="closeModals">我知道了</view>
+      </view>
+    </view>
+  </view>
+</view>

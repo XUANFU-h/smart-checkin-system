@@ -1,0 +1,31 @@
+<view class="container">
+  <view class="header">
+    <view class="title">选择你的试炼</view>
+    <view class="subtitle">学风建设月，请至少选择 <text class="highlight">2</text> 个赛道</view>
+  </view>
+
+  <view class="track-grid">
+    <view 
+      class="track-card glass-effect {{item.selected ? 'active' : ''}}" 
+      wx:for="{{tracks}}" 
+      wx:key="id" 
+      bindtap="toggleSelect" 
+      data-index="{{index}}">
+      
+      <view class="track-icon">{{item.icon}}</view>
+      <view class="track-info">
+        <view class="track-name">{{item.name}}</view>
+        <view class="track-desc">{{item.desc}}</view>
+      </view>
+      
+      <view class="check-circle" wx:if="{{item.selected}}">✓</view>
+    </view>
+  </view>
+
+  <view class="footer glass-effect">
+    <view class="count-tip">已选：{{selectedCount}} / 4</view>
+    <button class="submit-btn {{selectedCount >= 2 ? 'ready' : ''}}" bindtap="confirmSelection">
+      {{selectedCount >= 2 ? (mode === 'edit' ? '确认危险修改' : '确认并开启') : '请继续选择'}}
+    </button>
+  </view>
+</view>

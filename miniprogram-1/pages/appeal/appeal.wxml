@@ -1,0 +1,63 @@
+<view class="not-open-mask">
+  <view class="mask-content">
+    <view class="lock-icon">🔒</view>
+    <view class="mask-title">申诉大厅</view>
+    <view class="mask-desc">系统本阶段申诉大厅通道暂未开放，敬请期待！</view>
+    <button class="back-btn" bindtap="goBack">返回上一页</button>
+  </view>
+</view>
+
+<view class="container">
+  <view class="form-card glass-effect">
+    <view class="title heavy-text">发起工单 (申诉/反馈/建议)</view>
+
+    <view class="info-module">
+      <view class="info-row"><text class="label heavy-text">提交人</text><text class="value heavy-text">{{userInfo.realName || userInfo.nickname}}</text></view>
+      <view class="info-row"><text class="label heavy-text">所属班级</text><text class="value heavy-text">{{userInfo.className || '未绑定'}}</text></view>
+      <view class="info-row"><text class="label heavy-text">提交时间</text><text class="value time-text heavy-text">{{currentTime}}</text></view>
+    </view>
+
+    <view class="form-group">
+      <text class="label heavy-text">1. 选择工单分类 <text class="required">*</text></text>
+      <picker mode="selector" range="{{flatCategories}}" bindchange="onTypeChange">
+        <view class="picker-box heavy-text">{{selectedTypeIndex > -1 ? flatCategories[selectedTypeIndex] : '点击获取动态分类 >'}}</view>
+      </picker>
+    </view>
+
+    <block wx:if="{{isCheckinIssue}}">
+      <view class="form-group">
+        <text class="label heavy-text">关联的具体赛道 <text class="required">*</text></text>
+        <picker mode="selector" range="{{trackNames}}" bindchange="onTrackChange">
+          <view class="picker-box heavy-text">{{selectedTrackIndex > -1 ? trackNames[selectedTrackIndex] : '请选择出现异常的赛道 >'}}</view>
+        </picker>
+      </view>
+
+      <view class="form-group">
+        <text class="label heavy-text">出现异常的日期 <text class="required">*</text></text>
+        <picker mode="date" end="{{today}}" bindchange="onDateChange">
+          <view class="picker-box heavy-text">{{abnormalDate || '请选择打卡异常的日期 >'}}</view>
+        </picker>
+      </view>
+    </block>
+
+    <view class="form-group">
+      <text class="label heavy-text">2. 详细描述事由 <text class="required">*</text></text>
+      <textarea class="reason-input heavy-text" placeholder="请详细描述您遇到的问题、操作步骤或优化建议(最多200字)..." maxlength="200" value="{{reason}}" bindinput="handleReasonInput"></textarea>
+      <view class="word-count heavy-text">{{reason.length}}/200</view>
+    </view>
+
+    <view class="form-group">
+      <text class="label heavy-text">3. 提供凭证截图 <text class="optional heavy-text">(部分分类强制要求，最多3张)</text></text>
+      <view class="img-grid">
+        <view class="img-item" wx:for="{{imageList}}" wx:key="*this">
+          <image src="{{item}}" mode="aspectFill" bindtap="previewImg" data-url="{{item}}"></image>
+          <view class="del-btn" bindtap="removeImg" data-index="{{index}}">×</view>
+        </view>
+        <view class="add-btn" bindtap="chooseImage" wx:if="{{imageList.length < 3}}">+</view>
+      </view>
+    </view>
+
+  </view>
+
+  <button class="submit-btn heavy-text" bindtap="submitAppeal" disabled="{{isSubmitting}}">{{isEditMode ? '确认修改并重新递交' : '确认递交工单'}}</button>
+</view>

@@ -1,0 +1,78 @@
+<view class="login-page">
+
+<view class="container">
+  <view class="header-area {{step === 1 ? 'move-up' : 'center-stage'}}">
+    <image class="quantum-logo" src="/assets/logo.png" mode="aspectFit"></image>
+    <view class="splash-title-zh">以学赋能，以练筑基</view>
+    <view class="splash-title-en">——21天打卡攻坚赛</view>
+  </view>
+
+  <view class="login-card glass-effect {{step === 1 ? 'fade-in' : ''}}" wx:if="{{step === 1}}">
+
+    <block wx:if="{{isReturningUser}}">
+      <view class="form-title">欢迎回来</view>
+      <view class="quick-login-box" bindtap="fillAndSwitch">
+        <image class="quick-avatar" src="{{avatarUrl || '/assets/logo.png'}}"></image>
+        <view class="quick-name">{{realName}}</view>
+        <view class="quick-tip">👉 点击输入密码以进入系统</view>
+      </view>
+      <view class="switch-account" bindtap="switchAccount">切换其他账号</view>
+    </block>
+
+    <block wx:else>
+      <view class="form-title">账户登录</view>
+      <view class="form-desc">验证您的安全凭证</view>
+
+      <input type="text" class="neu-input" placeholder="真实姓名" placeholder-class="placeholder-color" value="{{realName}}" bindinput="handleNameInput" autocomplete="off" />
+
+      <view class="neu-input pseudo-input {{classFocus ? 'active' : ''}} {{!className ? 'placeholder-color' : ''}}" bindtap="openClassPicker">
+        {{className || '所属班级'}}
+        <text class="arrow-down-new"></text>
+      </view>
+
+      <input type="password" class="neu-input" placeholder="登录密码" placeholder-class="placeholder-color" value="{{password}}" bindinput="handlePwdInput" autocomplete="off" />
+
+      <view class="captcha-row">
+        <view class="captcha-group">
+          <input type="text" class="neu-input" placeholder="算数结果" placeholder-class="placeholder-color" value="{{captchaAnswer}}" bindinput="handleCaptchaInput" autocomplete="off" />
+        </view>
+        <view class="captcha-box" bindtap="refreshCaptcha">
+          <image wx:if="{{captchaImage}}" src="{{captchaImage}}" class="captcha-img"></image>
+          <text wx:else class="captcha-placeholder">获取中</text>
+        </view>
+      </view>
+
+      <button class="submit-btn {{isSubmitting ? 'submitting' : ''}}" bindtap="submitLogin">
+        <block wx:if="{{isSubmitting}}">
+          <view class="btn-dot-loader"><text></text><text></text><text></text></view>
+        </block>
+        <block wx:else>确认登录</block>
+      </button>
+
+      <view class="auth-links">
+        <text bindtap="goToRegister">用户注册</text>
+        <text class="divider">|</text>
+        <text bindtap="goToForgotPwd">忘记密码</text>
+      </view>
+    </block>
+  </view>
+</view>
+
+<view class="picker-overlay {{showClassPicker ? 'show' : ''}}" bindtap="closeClassPicker">
+  <view class="picker-content" catchtap="preventClose">
+    <view class="picker-header">
+      <text class="picker-title">请选择您的所属班级</text>
+      <text class="picker-close" bindtap="closeClassPicker">×</text>
+    </view>
+    <scroll-view scroll-y class="picker-list">
+      <view wx:for="{{classList}}" wx:key="*this" class="picker-item {{className === item ? 'is-active' : ''}}" data-class="{{item}}" bindtap="selectClass">
+        {{item}}
+      </view>
+    </scroll-view>
+  </view>
+</view>
+
+<view class="splash-footer-fixed" wx:if="{{step === 1}}">
+  信息工程学院 · 学习部
+</view>
+</view>

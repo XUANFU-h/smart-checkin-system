@@ -1,0 +1,391 @@
+page { background: #0A0A0C; padding: 30rpx; box-sizing: border-box; color: #fff; }
+.page-root { display: flex; flex-direction: column; gap: 40rpx; }
+
+.glass-card { 
+  background: rgba(255, 255, 255, 0.05); 
+  backdrop-filter: blur(20px); 
+  border: 1rpx solid rgba(255, 255, 255, 0.1); 
+  border-radius: 30rpx; 
+  box-shadow: 0 10rpx 30rpx rgba(0,0,0,0.5); 
+}
+
+/* 顶部状态栏 */
+.header-status { display: flex; justify-content: space-between; align-items: center; padding: 30rpx; }
+.title { font-size: 36rpx; font-weight: 900; margin-bottom: 10rpx; }
+.subtitle { font-size: 24rpx; color: #aaa; }
+.highlight { color: #00d9ff; font-weight: bold; }
+.status-right { font-size: 24rpx; color: #888; background: rgba(255,255,255,0.1); padding: 8rpx 20rpx; border-radius: 30rpx; }
+
+/* 今日免签进度条 */
+.progress-section {
+  padding: 35rpx 30rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.progress-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #fff;
+}
+.progress-status {
+  font-size: 22rpx;
+  padding: 6rpx 18rpx;
+  border-radius: 20rpx;
+  font-weight: bold;
+}
+.status-success {
+  background: rgba(7, 193, 96, 0.15);
+  color: #07c160;
+  border: 1px solid rgba(7, 193, 96, 0.3);
+}
+.status-pending {
+  background: rgba(255, 152, 0, 0.15);
+  color: #FF9800;
+  border: 1px solid rgba(255, 152, 0, 0.3);
+}
+.progress-bar-container {
+  height: 12rpx;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6rpx;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00d9ff, #07c160);
+  border-radius: 6rpx;
+  transition: width 0.3s ease;
+}
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 22rpx;
+  color: #aaa;
+}
+.bold-text {
+  font-weight: bold;
+  color: #fff;
+}
+.text-success {
+  color: #07c160 !important;
+}
+.text-warning {
+  color: #FF9800 !important;
+}
+
+/* 核心老虎机 */
+.slot-machine-container { display: flex; justify-content: center; }
+.machine-body { width: 100%; padding: 50rpx 40rpx; border-top: 2rpx solid rgba(0, 217, 255, 0.3); transition: 0.5s; }
+.spinning-glow { box-shadow: 0 0 50rpx rgba(0, 217, 255, 0.2); border-color: #00d9ff; }
+.locked-glow { box-shadow: 0 0 50rpx rgba(7, 193, 96, 0.2); border-color: #07c160; }
+
+.machine-screen { background: #000; border-radius: 20rpx; padding: 40rpx 20rpx; display: flex; justify-content: center; align-items: center; gap: 20rpx; box-shadow: inset 0 10rpx 20rpx rgba(0,0,0,0.8); border: 4rpx solid #333;}
+.number-reel { background: #111; border-radius: 16rpx; width: 140rpx; height: 160rpx; display: flex; justify-content: center; align-items: center; border: 2rpx solid #222; overflow: hidden; }
+.num-text { font-family: 'DIN Alternate', monospace; font-size: 80rpx; font-weight: 900; color: #00d9ff; text-shadow: 0 0 20rpx rgba(0, 217, 255, 0.8); transition: filter 0.1s; }
+.blur-text { filter: blur(4rpx); opacity: 0.8; }
+.divider { font-size: 60rpx; color: #555; font-weight: 900; }
+
+/* 控制台与卡片选择器 */
+.machine-controls { margin-top: 50rpx; display: flex; flex-direction: column; align-items: center; gap: 30rpx;}
+.control-tip { font-size: 26rpx; color: #fff; font-weight: bold; }
+
+.spin-control-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+.lock-btn-wrap {
+  width: 100%;
+}
+
+.choice-container {
+  display: flex;
+  gap: 20rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+.choice-card {
+  flex: 1;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24rpx;
+  padding: 30rpx 16rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  transition: all 0.2s ease;
+}
+.choice-card:active {
+  transform: scale(0.96);
+}
+.active-choice {
+  background: rgba(0, 217, 255, 0.05);
+  border-color: rgba(0, 217, 255, 0.25);
+  box-shadow: 0 10rpx 25rpx rgba(0, 217, 255, 0.05);
+}
+.disabled-choice {
+  opacity: 0.4;
+}
+.point-choice {
+  background: rgba(255, 193, 7, 0.05);
+  border-color: rgba(255, 193, 7, 0.25);
+  box-shadow: 0 10rpx 25rpx rgba(255, 193, 7, 0.05);
+}
+.choice-icon {
+  font-size: 48rpx;
+  margin-bottom: 12rpx;
+}
+.choice-title {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 8rpx;
+}
+.choice-desc {
+  font-size: 18rpx;
+  color: #aaa;
+  line-height: 1.3;
+  margin-bottom: 16rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.choice-badge {
+  font-size: 18rpx;
+  font-weight: bold;
+  padding: 4rpx 12rpx;
+  border-radius: 20rpx;
+}
+.badge-active {
+  background: #07c160;
+  color: #fff;
+}
+.badge-disabled {
+  background: #444;
+  color: #888;
+}
+.badge-points {
+  background: #FF9800;
+  color: #fff;
+}
+
+.btn-group { display: flex; gap: 20rpx; width: 100%; }
+.action-btn { flex: 1; height: 90rpx; line-height: 90rpx; text-align: center; border-radius: 20rpx; font-size: 30rpx; font-weight: bold; transition: 0.2s; }
+.action-btn:active { transform: scale(0.95); }
+.action-btn.disabled { filter: grayscale(100%); opacity: 0.5; pointer-events: none; }
+
+.spin-btn { background: linear-gradient(135deg, #1e90ff, #00d9ff); color: #fff; box-shadow: 0 10rpx 20rpx rgba(0, 217, 255, 0.3); width: 100%; }
+.lock-btn { background: linear-gradient(135deg, #07c160, #20bf55); color: #fff; box-shadow: 0 10rpx 20rpx rgba(7, 193, 96, 0.3); width: 100%; }
+.draw-btn { background: linear-gradient(135deg, #ff4757, #ff6b81); color: #fff; box-shadow: 0 10rpx 20rpx rgba(255, 71, 87, 0.3); width: 100%; }
+
+.draw-result-text { font-size: 28rpx; font-weight: bold; color: #FF9800; padding: 20rpx; background: rgba(255, 152, 0, 0.1); border-radius: 16rpx; width: 100%; text-align: center; border: 1px solid rgba(255, 152, 0, 0.3); }
+
+/* 全服播报与幸运大红榜 */
+.broadcast-section { padding: 35rpx 30rpx !important; }
+.b-title { font-size: 30rpx !important; font-weight: bold !important; color: #FFD700 !important; margin-bottom: 25rpx !important; text-shadow: 0 0 10rpx rgba(255, 215, 0, 0.2) !important; }
+.b-swiper { height: 280rpx !important; }
+.b-item { display: flex !important; align-items: center !important; justify-content: space-between !important; font-size: 26rpx !important; color: #ddd !important; height: 80rpx !important; border-bottom: 1rpx dashed rgba(255, 255, 255, 0.05) !important; box-sizing: border-box !important; }
+.b-user { color: #fff !important; font-weight: bold !important; width: 150rpx !important; overflow: hidden !important; text-overflow: ellipsis !important; white-space: nowrap !important; }
+.b-desc { color: #aaa !important; flex: 1 !important; margin: 0 20rpx !important; }
+.b-num { color: #00d9ff !important; font-family: monospace !important; font-weight: bold !important; background: rgba(0, 217, 255, 0.1) !important; padding: 2rpx 8rpx !important; border-radius: 6rpx !important; }
+.b-prize { color: #ff4757 !important; background: rgba(255,71,87,0.12) !important; padding: 4rpx 14rpx !important; border-radius: 8rpx !important; font-weight: bold !important; font-size: 22rpx !important; }
+
+/* 弹窗 */
+.modal-mask { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.3s; backdrop-filter: blur(5px); }
+.modal-mask.show { opacity: 1; visibility: visible; }
+.modal-content { width: 80%; padding: 60rpx 40rpx; text-align: center; }
+.egg-icon { font-size: 100rpx; margin-bottom: 20rpx; text-shadow: 0 0 30rpx rgba(255,215,0,0.8); }
+.egg-title { font-size: 40rpx; font-weight: 900; color: #FFD700; margin-bottom: 20rpx; }
+.egg-desc { font-size: 26rpx; color: #ddd; margin-bottom: 10rpx; }
+.egg-prize { font-size: 32rpx; font-weight: bold; color: #ff4757; margin-bottom: 40rpx; }
+
+/* 开奖揭晓结果卡片 (三组数字位置) */
+.revealed-mode {
+  padding: 30rpx 15rpx !important;
+  gap: 15rpx !important;
+}
+.result-card {
+  width: 210rpx !important;
+  height: 180rpx !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 10rpx !important;
+  box-sizing: border-box !important;
+  background: linear-gradient(135deg, #181824, #0d0d15) !important;
+  border: 2rpx solid rgba(255, 215, 0, 0.2) !important;
+  box-shadow: 0 4rpx 15rpx rgba(0,0,0,0.6) !important;
+}
+.result-label {
+  font-size: 20rpx;
+  color: #888;
+  margin-bottom: 12rpx;
+  font-weight: bold;
+  letter-spacing: 2rpx;
+}
+.result-value {
+  font-size: 26rpx;
+  font-weight: bold;
+  text-align: center;
+  word-break: break-all;
+}
+.text-gold {
+  color: #FFD700;
+  text-shadow: 0 0 10rpx rgba(255, 215, 0, 0.4);
+}
+.text-green {
+  color: #07c160;
+  text-shadow: 0 0 10rpx rgba(7, 193, 96, 0.4);
+}
+.text-blue {
+  color: #00d9ff;
+  text-shadow: 0 0 10rpx rgba(0, 217, 255, 0.4);
+}
+
+/* 返回抽奖页面按钮 */
+.back-btn {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #fff !important;
+  border: 1rpx solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 4rpx 15rpx rgba(0,0,0,0.3) !important;
+  width: 100% !important;
+}
+.back-btn:active {
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* 往期荣誉中奖红榜样式 */
+.history-section {
+  padding: 35rpx 30rpx !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20rpx !important;
+}
+.h-title {
+  font-size: 30rpx !important;
+  font-weight: bold !important;
+  color: #00d9ff !important;
+  text-shadow: 0 0 10rpx rgba(0, 217, 255, 0.2) !important;
+  margin-bottom: 10rpx !important;
+}
+.h-scroll {
+  max-height: 380rpx !important;
+  box-sizing: border-box !important;
+}
+.h-item {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  font-size: 24rpx !important;
+  color: #ccc !important;
+  padding: 20rpx 0 !important;
+  border-bottom: 1rpx solid rgba(255, 255, 255, 0.06) !important;
+}
+.h-item:last-child {
+  border-bottom: none !important;
+}
+.h-week {
+  font-weight: bold !important;
+  color: #FF9800 !important;
+  width: 120rpx !important;
+}
+.h-user {
+  color: #fff !important;
+  font-weight: bold !important;
+  width: 110rpx !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+.h-class {
+  color: #888 !important;
+  width: 130rpx !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+.h-num {
+  font-family: monospace !important;
+  color: #00d9ff !important;
+  background: rgba(0, 217, 255, 0.08) !important;
+  padding: 2rpx 8rpx !important;
+  border-radius: 6rpx !important;
+  font-size: 22rpx !important;
+  width: 140rpx !important;
+  text-align: center !important;
+}
+.h-prize {
+  color: #07c160 !important;
+  background: rgba(7, 193, 96, 0.1) !important;
+  padding: 4rpx 12rpx !important;
+  border-radius: 6rpx !important;
+  font-weight: bold !important;
+  font-size: 20rpx !important;
+  max-width: 180rpx !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+/* 🔒 创意工坊暂未开放全局遮罩 */
+.global-workshop-lock-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+  z-index: 99;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.global-workshop-lock-mask .lock-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx;
+  text-align: center;
+}
+
+.global-workshop-lock-mask .lock-icon {
+  font-size: 100rpx;
+  margin-bottom: 30rpx;
+  animation: lockBounce 2s infinite ease-in-out;
+}
+
+.global-workshop-lock-mask .lock-title {
+  color: #ef4444;
+  font-size: 40rpx;
+  font-weight: 800;
+  margin-bottom: 20rpx;
+  letter-spacing: 2rpx;
+}
+
+.global-workshop-lock-mask .lock-subtitle {
+  color: #a3a3a3;
+  font-size: 28rpx;
+  line-height: 1.5;
+}
+
+@keyframes lockBounce {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-20rpx) scale(1.1);
+  }
+}

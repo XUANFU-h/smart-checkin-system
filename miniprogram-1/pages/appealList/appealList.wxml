@@ -1,0 +1,49 @@
+<view class="not-open-mask">
+  <view class="mask-content">
+    <view class="lock-icon">🔒</view>
+    <view class="mask-title">申诉大厅</view>
+    <view class="mask-desc">系统本阶段申诉大厅通道暂未开放，敬请期待！</view>
+    <button class="back-btn" bindtap="goBack">返回上一页</button>
+  </view>
+</view>
+
+<view class="container">
+  <view class="header-row">
+    <view class="title heavy-text">申诉历史大厅</view>
+    <view class="new-appeal-btn heavy-text" bindtap="goNewAppeal">➕ 发起申诉</view>
+  </view>
+  
+  <view class="appeal-card" wx:for="{{appeals}}" wx:key="id">
+    <view class="card-top">
+      <view class="time heavy-text">提交时间：{{item.appealTime}}</view>
+      <view class="status {{item.status === 0 ? 'pending' : (item.status === 1 ? 'success' : 'rejected')}} heavy-text">
+        {{item.status === 0 ? '审核中' : (item.status === 1 ? '已通过' : '已驳回')}}
+      </view>
+    </view>
+    
+    <view class="detail-box">
+      <view class="heavy-text" style="margin-bottom: 8rpx;">申诉事由：{{item.reason.split('】 ')[0] + '】'}}</view>
+      <view class="heavy-text" style="color: #444;">申诉原因：{{item.reason.split('】 ')[1] || item.reason}}</view>
+      
+      <view class="img-preview" wx:if="{{item.imageUrl}}">
+        <image wx:for="{{item.imgArr}}" wx:key="*this" src="{{item}}" mode="aspectFill" bindtap="previewImg" data-url="{{item}}" data-list="{{item.imgArr}}"></image>
+      </view>
+    </view>
+
+    <view class="divider"></view>
+
+    <view class="reply-box" wx:if="{{item.status !== 0}}">
+      <view class="heavy-text">处理意见：{{item.status === 1 ? '通过' : '驳回'}} <text class="reward-text" wx:if="{{item.rewardText}}">【奖励：{{item.rewardText}}】</text></view>
+      <view class="heavy-text">处理人：{{item.handlerName || '系统管理员'}}</view>
+      <view class="heavy-text">处理时间：{{item.handleTime}}</view>
+      <view class="heavy-text" style="margin-top:10rpx; color:#d00;">官方回复：{{item.reply}}</view>
+    </view>
+
+    <view class="action-box" wx:if="{{item.status === 0}}">
+      <view class="btn edit-btn heavy-text" bindtap="editAppeal" data-item="{{item}}">修改内容</view>
+      <view class="btn revoke-btn heavy-text" bindtap="revokeAppeal" data-id="{{item.id}}">撤销工单</view>
+    </view>
+  </view>
+
+  <view wx:if="{{appeals.length === 0}}" class="empty-tip heavy-text">暂无历史申诉工单</view>
+</view>

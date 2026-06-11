@@ -1,0 +1,100 @@
+page { background-image: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%); min-height: 100vh; box-sizing: border-box; }
+.checkin-page { padding: 40rpx 32rpx; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+
+.glass-effect { background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(20px); border: 2rpx solid rgba(255, 255, 255, 0.9); border-radius: 20rpx; }
+
+/* 1:1 日历卡片 */
+.card { width: 100%; box-sizing: border-box; padding: 30rpx; border: 2rpx solid #0d1117; border-radius: 20rpx; background-color: #000; box-shadow: 0 8rpx 16rpx rgba(0, 0, 0, 0.2); margin-bottom: 50rpx; position: relative; }
+.mac-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24rpx; }
+.mac-dots { display: flex; gap: 12rpx; }
+.mac-dot { display: inline-block; width: 24rpx; height: 24rpx; border-radius: 50%; }
+.mac-dot.red { background-color: #ff5f57; }
+.mac-dot.yellow { background-color: #ffbd2e; }
+.mac-dot.green { background-color: #28c941; }
+.card-title { font-size: 32rpx; font-weight: bold; color: #e6e6ef; }
+.code-editor { background-color: #0d1117; border: 2rpx solid #333; border-radius: 12rpx; padding: 20rpx; box-sizing: border-box; }
+
+.makeup-btn { background: rgba(230, 162, 60, 0.15); color: #E6A23C; padding: 10rpx 24rpx; border-radius: 30rpx; font-size: 24rpx; font-weight: bold; border: 2rpx solid rgba(230, 162, 60, 0.3); }
+.makeup-btn:active { background: rgba(230, 162, 60, 0.25); }
+
+.week-header { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 24rpx; color: #888; margin-bottom: 16rpx; }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10rpx; }
+.day-item { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 80rpx; border-radius: 12rpx; transition: all 0.2s; background: transparent; position: relative;}
+.day-item.empty { visibility: hidden; }
+
+/* 💡 内测期蓝框高亮 */
+.beta-day { border: 3rpx solid #3b82f6; box-shadow: inset 0 0 10rpx rgba(59, 130, 246, 0.2); }
+.beta-day .date-num { color: #82b1ff; font-weight: bold; }
+
+.day-item.selected { background: rgba(7, 193, 96, 0.15); border: 3rpx solid #07c160; }
+.day-item.selected .date-num { color: #07c160; font-weight: bold;}
+.date-num { font-size: 28rpx; color: #ccc; margin-bottom: 6rpx; font-family: monospace; }
+
+.status-dot { width: 10rpx; height: 10rpx; border-radius: 50%; }
+.status-0 { background: transparent; } 
+.status-1 { background: #28c941; box-shadow: 0 0 8rpx #28c941; } 
+.status-2 { background: #ffbd2e; box-shadow: 0 0 8rpx #ffbd2e; } 
+.status-3 { background: #ff5f57; box-shadow: 0 0 8rpx #ff5f57; } 
+.status-4 { background: #3b82f6; box-shadow: 0 0 8rpx #3b82f6; } 
+
+.legend { display: flex; justify-content: flex-end; gap: 20rpx; margin-top: 24rpx; font-size: 20rpx; color: #888; }
+.legend-item { display: flex; align-items: center; gap: 6rpx; }
+.legend-item .dot { width: 12rpx; height: 12rpx; border-radius: 50%; }
+.legend-item .red { background-color: #ff5f57; }
+.legend-item .yellow { background-color: #ffbd2e; }
+.legend-item .green { background-color: #28c941; }
+.legend-item .blue { background-color: #3b82f6; }
+
+/* 参与试炼 */
+.section-title { font-size: 32rpx; font-weight: bold; margin-bottom: 30rpx; color: #333; border-left: 8rpx solid #07c160; padding-left: 16rpx; }
+
+.action-grid-2 { display: flex; justify-content: space-between; gap: 25rpx; margin-bottom: 50rpx; }
+.action-square { flex: 1; aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; transition: all 0.2s; background: #fff; border-radius: 24rpx;}
+.action-square:active { transform: scale(0.95); background: #f0f0f0; }
+.square-icon { font-size: 76rpx; margin-bottom: 16rpx; text-shadow: 0 4rpx 10rpx rgba(0,0,0,0.1); }
+.square-name { font-size: 30rpx; font-weight: bold; color: #000; font-family: 'SimSun', 'STSong', serif; }
+
+/* 赛道切换 */
+.track-tabs-container { background: rgba(0,0,0,0.6); border: 2rpx solid rgba(7,193,96,0.3); border-radius: 50rpx; padding: 10rpx; margin-bottom: 30rpx; }
+.track-tabs { display: flex; gap: 10rpx; justify-content: space-between; width: 100%; }
+.track-tab { flex: 1; text-align: center; padding: 16rpx 0; background: rgba(255,255,255,0.1); border-radius: 40rpx; font-size: 26rpx; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: 0.3s; font-weight: bold;}
+.track-tab.active { background: #07c160; color: #fff; box-shadow: 0 4rpx 12rpx rgba(7,193,96,0.5); }
+
+/* 历史列表 */
+.sports-record-card { padding: 30rpx; margin-bottom: 20rpx; }
+.sports-time { font-size: 28rpx; color: #333; font-weight: bold; margin-bottom: 10rpx; }
+.sports-data { font-size: 24rpx; color: #07c160; }
+
+.history-list { display: flex; flex-direction: column; gap: 30rpx; }
+.empty-tip { text-align: center; color: #888; font-size: 28rpx; padding: 60rpx 0; font-weight: bold;}
+.tw-card { background-color: #fff; border: 2rpx solid #e2e8f0; border-radius: 24rpx; padding: 16rpx; box-sizing: border-box; }
+.tw-header { text-align: center; color: #e2e8f0; font-size: 28rpx; font-weight: bold; margin-bottom: 16rpx; background: #0f1015; border-radius: 12rpx; padding: 10rpx;}
+.tw-content { background-color: #f1f5f9; border: 2rpx solid #e2e8f0; border-radius: 16rpx; min-height: 200rpx; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 16rpx;}
+.tw-image { width: 100%; height: 300rpx; }
+.tw-text { padding: 20rpx; font-size: 28rpx; color: #475569; width: 100%; box-sizing: border-box; word-break: break-all;}
+.tw-actions { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16rpx; height: 60rpx; }
+.tw-btn { background-color: #f1f5f9; border: 2rpx solid #e2e8f0; border-radius: 12rpx; display: flex; justify-content: center; align-items: center; font-size: 24rpx; color: #475569; font-weight: bold; grid-column: span 2;}
+.tw-btn:active { border-color: #475569; background-color: #e2e8f0; }
+
+/* 评价弹窗 */
+.eval-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(10px); z-index: 10000; display: flex; align-items: center; justify-content: center; }
+.eval-card { width: 600rpx; padding: 40rpx; display: flex; flex-direction: column; background: #1a1c23; border: 2rpx solid rgba(255,255,255,0.1); border-radius: 20rpx;}
+.eval-title { font-size: 36rpx; font-weight: bold; text-align: center; color: #fff; margin-bottom: 30rpx; }
+.eval-section { padding: 20rpx; background: rgba(0,0,0,0.3); border-radius: 12rpx; }
+.eval-sub { font-size: 28rpx; font-weight: bold; color: #07c160; margin-bottom: 10rpx; }
+.eval-score { font-size: 40rpx; font-weight: bold; color: #E6A23C; text-align: right; }
+.eval-text { font-size: 26rpx; color: #ccc; line-height: 1.5; }
+.eval-divider { height: 2rpx; background: rgba(255,255,255,0.1); margin: 20rpx 0; }
+.eval-close { background: #07c160; color: #fff; border-radius: 40rpx; margin-top: 30rpx; font-size: 32rpx; font-weight: bold; }
+
+/* 运动弹窗 */
+.sports-popup-mask { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 9999; display: flex; align-items: flex-end; justify-content: center; }
+.sports-popup-content { width: 100%; background: #f5f7fa; border-radius: 40rpx 40rpx 0 0; padding: 60rpx 40rpx; box-sizing: border-box; animation: slideUp 0.3s ease; }
+.popup-title { font-size: 38rpx; font-weight: bold; text-align: center; margin-bottom: 50rpx; color: #333; font-family: 'SimSun', serif;}
+.popup-cards { display: flex; justify-content: space-between; gap: 30rpx; margin-bottom: 50rpx;}
+.popup-card { flex: 1; aspect-ratio: 1; background: #fff; border-radius: 30rpx; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 10rpx 30rpx rgba(0,0,0,0.05); transition: 0.2s;}
+.popup-card:active { transform: scale(0.95); background: #f0f0f0; }
+.popup-icon { font-size: 80rpx; margin-bottom: 20rpx; }
+.popup-text { font-size: 32rpx; font-weight: bold; color: #333; font-family: 'SimSun', serif;}
+.popup-close { text-align: center; font-size: 32rpx; color: #999; padding: 20rpx 0; border-top: 1px solid #ddd; font-weight: bold;}
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }

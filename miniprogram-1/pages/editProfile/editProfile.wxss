@@ -1,0 +1,81 @@
+page { background-color: #f5f7fa; color: #333; padding: 40rpx; box-sizing: border-box;}
+.form-title { font-size: 40rpx; font-weight: bold; margin-bottom: 40rpx; text-align: center; font-family: 'KaiTi', serif; color: #2c3e50;}
+
+.glass-effect {
+  background: rgba(255,255,255,0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.8); box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+  border-radius: 40rpx; padding: 60rpx 40rpx; box-sizing: border-box; width: 100%;
+}
+
+.avatar-wrapper { padding: 0; width: 140rpx !important; height: 140rpx; border-radius: 50%; background: transparent; margin-bottom: 10rpx;}
+.avatar { width: 100%; height: 100%; border-radius: 50%; }
+.tip-text { text-align: center; font-size: 24rpx; color: #999; margin-bottom: 40rpx; }
+
+.input-group { margin-bottom: 30rpx; }
+.label { display: block; font-size: 26rpx; color: #07c160; margin-bottom: 10rpx; font-weight: bold;}
+.glass-input {
+  height: 90rpx; background: rgba(255,255,255,0.5); border: 1px solid rgba(0,0,0,0.05); box-sizing: border-box;
+  border-radius: 20rpx; color: #333; padding: 0 30rpx; font-size: 28rpx; width: 100%;
+}
+
+/* 学号等被禁用的样式 */
+.disabled-input {
+  background: rgba(0, 0, 0, 0.04);
+  color: #a0a0a0;
+  border-color: transparent;
+}
+
+/* 💡 新增：密码安全矩阵菜单 */
+.security-menu {
+  margin: 40rpx 0 20rpx 0;
+  border-radius: 20rpx;
+  background: rgba(255,255,255,0.6);
+  overflow: hidden;
+}
+.menu-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 30rpx; border-bottom: 1rpx solid rgba(0,0,0,0.04);
+  font-size: 28rpx; color: #2c3e50; font-weight: bold;
+}
+.menu-item:last-child { border-bottom: none; }
+.menu-item:active { background: rgba(0,0,0,0.02); }
+.menu-item .arrow { color: #b2bec3; font-family: monospace; font-size: 32rpx; }
+
+.submit-btn { background: #07c160; color: #fff; border-radius: 50rpx; font-weight: bold; margin-top: 40rpx; box-shadow: 0 5px 15px rgba(7, 193, 96, 0.2);}
+.logout-btn { 
+  background: transparent; 
+  color: #F56C6C; 
+  border: 1px solid rgba(245, 108, 108, 0.4); 
+  border-radius: 50rpx; 
+  font-weight: bold; 
+  margin-top: 30rpx; 
+  font-size: 30rpx;
+}
+.logout-btn:active { background: rgba(245, 108, 108, 0.1); }
+
+.cancel-account-btn {
+  background: transparent; 
+  color: #999; 
+  border: none; 
+  margin-top: 30rpx; 
+  font-size: 24rpx;
+  text-decoration: underline;
+}
+
+/* 注销弹窗样式 */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.6); z-index: 999;
+  display: flex; justify-content: center; align-items: center;
+}
+.modal-content {
+  width: 85%; padding: 50rpx; text-align: center;
+}
+.modal-title { font-size: 36rpx; font-weight: bold; color: #F56C6C; margin-bottom: 20rpx; }
+.modal-desc { font-size: 26rpx; color: #666; margin-bottom: 30rpx; line-height: 1.6; }
+.cancel-pwd-box { margin-bottom: 40rpx; }
+.modal-actions { display: flex; justify-content: space-between; gap: 20rpx; }
+.modal-btn { flex: 1; font-size: 28rpx; border-radius: 40rpx; padding: 0; height: 80rpx; line-height: 80rpx; font-weight: bold;}
+.modal-btn.cancel { background: rgba(0,0,0,0.05); color: #333; border: none; }
+.modal-btn.confirm { background: #F56C6C; color: #fff; }
+.modal-btn.confirm.disabled { background: #fbc4c4; color: #fff; opacity: 0.8; }

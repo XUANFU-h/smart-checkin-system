@@ -1,0 +1,112 @@
+<view class="container checkin-page">
+  <view class="card">
+    <view class="mac-header">
+      <view class="mac-dots">
+        <text class="mac-dot red"></text>
+        <text class="mac-dot yellow"></text>
+        <text class="mac-dot green"></text>
+      </view>
+      <view style="display:flex; gap: 15rpx;">
+        <view class="makeup-btn" bindtap="useMakeupCard">补签卡: {{makeupCards}}</view>
+      </view>
+    </view>
+    
+    <view class="card-title" style="margin-bottom: 30rpx;">今日截止时间: {{deadlineTime}}</view>
+    
+    <view class="code-editor">
+      <view class="week-header"><text>日</text><text>一</text><text>二</text><text>三</text><text>四</text><text>五</text><text>六</text></view>
+      <view class="calendar-grid">
+        <view class="day-item empty" wx:for="{{emptyDays}}" wx:key="*this"></view>
+        <view class="day-item {{selectedDate === item.fullDate ? 'selected' : ''}} {{item.isBeta ? 'beta-day' : ''}}" wx:for="{{calendarDays}}" wx:key="fullDate" bindtap="onDateClick" data-item="{{item}}">
+          <text class="date-num">{{item.date}}</text>
+          <view class="status-dot status-{{item.status}}"></view>
+        </view>
+      </view>
+    </view>
+
+    <view class="legend">
+      <view class="legend-item"><view class="dot red"></view><text>缺卡</text></view>
+      <view class="legend-item"><view class="dot yellow"></view><text>部分打卡</text></view>
+      <view class="legend-item"><view class="dot green"></view><text>完成</text></view>
+      <view class="legend-item"><view class="dot blue"></view><text>已补签</text></view>
+    </view>
+  </view>
+
+  <view class="section-title">参与试炼</view>
+  <view class="action-grid-2">
+    <view class="action-square glass-effect" bindtap="goToCheckin" data-mode="image">
+      <text class="square-icon">📸</text>
+      <text class="square-name">图文打卡</text>
+    </view>
+    <view class="action-square glass-effect" bindtap="goToCheckin" data-mode="file">
+      <text class="square-icon">📄</text>
+      <text class="square-name">文档提交</text>
+    </view>
+  </view>
+
+  <view class="track-tabs-container" wx:if="{{myTracks.length > 0}}">
+    <view class="track-tabs">
+      <view class="track-tab {{currentTrackId === item.id ? 'active' : ''}}" 
+            wx:for="{{myTracks}}" wx:key="id" 
+            bindtap="switchTrack" data-id="{{item.id}}">
+        {{item.name}}
+      </view>
+    </view>
+  </view>
+
+  <view class="history-list">
+    <view class="empty-tip" wx:if="{{displayRecords.length === 0}}">选中日期 ({{selectedDate}}) 暂无该赛道记录</view>
+    
+    <block wx:for="{{displayRecords}}" wx:key="id">
+      <view class="sports-record-card glass-effect" wx:if="{{item.type === 'sports'}}">
+        <view class="sports-time">🏃 {{item.createTime}}</view>
+        <view class="sports-data">步数: {{item.distance}} | 时长: {{item.duration}}</view>
+      </view>
+
+      <view class="tw-card" wx:else>
+        <view class="tw-header">{{item.createTime}}</view>
+        <view class="tw-content">
+          <image wx:if="{{item.imageUrl}}" src="{{item.imageUrl}}" mode="aspectFill" class="tw-image" bindtap="previewImage" data-url="{{item.imageUrl}}"></image>
+          <text wx:else class="tw-text">{{item.content || item.contentText}}</text>
+        </view>
+        
+        <view class="tw-actions">
+          <view class="tw-btn" bindtap="handleDelete" data-item="{{item}}">🗑 删除</view>
+          <view class="tw-btn" bindtap="handleEdit" data-item="{{item}}">✏️ 修改</view>
+          <view class="tw-btn" bindtap="handleEvaluate" data-item="{{item}}">👨‍🏫 导师批阅</view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <view style="height: 180rpx;"></view>
+
+  <view class="eval-overlay" wx:if="{{showEvalModal}}" bindtap="closeEval">
+    <view class="eval-card glass-effect" catchtap="preventClose">
+      <view class="eval-title">打卡评价详情</view>
+      <view class="eval-section admin">
+        <view class="eval-sub">👨‍🏫 导师批阅反馈</view>
+        <view class="eval-score">{{currentEval.aiScore || currentEval.score || 0}} 分</view>
+        <view class="eval-text">{{currentEval.aiComment || currentEval.adminComment || '管理员正在快速审阅中...'}}</view>
+      </view>
+      <button class="eval-close" bindtap="closeEval">我知道了</button>
+    </view>
+  </view>
+
+  <view class="sports-popup-mask" wx:if="{{showSportsPopup}}" bindtap="closeSportsPopup">
+    <view class="sports-popup-content glass-effect" catchtap="true">
+      <view class="popup-title">请选择运动打卡方式</view>
+      <view class="popup-cards">
+        <view class="popup-card" bindtap="goToSportsRecord">
+          <text class="popup-icon">📊</text>
+          <text class="popup-text">运动记录</text>
+        </view>
+        <view class="popup-card" bindtap="goToSportsImage">
+          <text class="popup-icon">📸</text>
+          <text class="popup-text">图片上传</text>
+        </view>
+      </view>
+      <view class="popup-close" bindtap="closeSportsPopup">取消</view>
+    </view>
+  </view>
+</view>

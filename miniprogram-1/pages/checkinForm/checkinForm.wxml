@@ -1,0 +1,60 @@
+<view class="page-view form-page">
+  <view class="sub-header">
+    <view class="back-btn" bindtap="goBack">← 取消打卡</view>
+    <text class="sub-title">{{ pageTitle }}</text>
+  </view>
+
+  <view class="page-content">
+    <view class="form-card glass-effect">
+      
+      <view class="info-module">
+        <view class="info-row"><text class="label">提交者</text><text class="value">{{userInfo.realName || userInfo.nickname || '未命名'}}</text></view>
+        <view class="info-row"><text class="label">班级</text><text class="value">{{userInfo.className || '暂无班级'}}</text></view>
+        <view class="info-row"><text class="label">长学号</text><text class="value">{{userInfo.studentId || '暂无学号'}}</text></view>
+        <view class="info-row"><text class="label">提交时间</text><text class="value time-text">{{currentTime}}</text></view>
+      </view>
+
+      <view class="track-selector module-box">
+        <view class="area-title">1. 选择打卡赛道</view>
+        <picker mode="selector" range="{{trackList}}" range-key="name" bindchange="onTrackChange" disabled="{{mode === 'sports_image'}}">
+          <view class="picker-box {{mode === 'sports_image' ? 'disabled' : ''}}">
+            <text class="select-value">{{selectedTrack ? selectedTrack.name : '点击选择要打卡的赛道 >'}}</text>
+          </view>
+        </picker>
+      </view>
+
+      <view class="title-input module-box">
+        <view class="area-title">2. 提交标题 (必填)</view>
+        <input class="custom-input" placeholder="请输入标题 (20字以内)" maxlength="20" bindinput="onTitleInput" value="{{submitTitle}}" />
+      </view>
+
+      <view class="upload-area module-box">
+        <view class="area-title" wx:if="{{mode === 'image' || mode === 'sports_image'}}">
+          3. 上传凭证 (最多 5 张，单张 10MB 内)
+        </view>
+        <view class="area-title" wx:if="{{mode === 'file'}}">
+          3. 上传文档 (最多 2 个，单文件 20MB 内)
+        </view>
+        
+        <view class="img-grid" wx:if="{{mode === 'image' || mode === 'sports_image'}}">
+          <view class="img-item" wx:for="{{imageList}}" wx:key="*this">
+            <image src="{{item}}" mode="aspectFill" bindtap="previewImg" data-url="{{item}}"></image>
+            <view class="del-btn" bindtap="removeImg" data-index="{{index}}">×</view>
+          </view>
+          <view class="add-btn" bindtap="chooseImage" wx:if="{{imageList.length < 5}}">+</view>
+        </view>
+
+        <view class="file-upload" wx:if="{{mode === 'file'}}">
+          <view class="add-file-btn" bindtap="chooseFile" wx:if="{{fileList.length < 2}}">+ 选择任意文档 / 压缩包</view>
+          <view class="file-item" wx:for="{{fileList}}" wx:key="name">
+            <text class="file-name">{{item.name}}</text>
+            <view class="del-btn-file" bindtap="removeFile" data-index="{{index}}">×</view>
+          </view>
+        </view>
+      </view>
+      
+    </view>
+
+    <button class="submit-btn" bindtap="submitCheckin">提交打卡</button>
+  </view>
+</view>

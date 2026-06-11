@@ -1,0 +1,59 @@
+<view class="container">
+  <view class="shop-header">
+    <view class="title">学风驿站</view>
+    <view class="subtitle">当前可用赋能分：<text class="highlight">{{empowermentScore}}</text></view>
+  </view>
+
+  <view class="goods-grid">
+    <view class="goods-card glass-effect" wx:for="{{regularGoods}}" wx:key="id">
+      <view class="goods-icon">🎁</view>
+      <view class="goods-info">
+        <view class="goods-name">{{item.name}}</view>
+        <view class="goods-desc">内含面值: {{item.rewardValue}} {{item.type === 'moral' ? '分' : '张'}}</view>
+        <view class="goods-stock">
+          剩余库存: <text class="{{item.stock === 0 ? 'text-red' : 'text-green'}}">{{item.stock === -1 ? '无限量' : item.stock + ' 件'}}</text>
+        </view>
+        <view class="goods-limit" wx:if="{{item.userLimit > 0}}">
+          单人限额: <text class="{{item.userBought >= item.userLimit ? 'text-red' : 'text-green'}}">{{item.userBought || 0}}/{{item.userLimit}}</text>
+        </view>
+      </view>
+      <view class="goods-action">
+        <view class="goods-price"><text class="price-num">{{item.empCost}}</text> 分</view>
+        <button class="exchange-btn {{item.disabled ? 'disabled' : ''}}" bindtap="doExchange" data-item="{{item}}">
+          {{item.btnText}}
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <view class="divider" wx:if="{{timedGoods.length > 0}}">
+    <view class="line"></view>
+    <view class="divider-text">🔥 限时抢购区</view>
+    <view class="line"></view>
+  </view>
+
+  <view class="goods-grid">
+    <view class="goods-card glass-effect" wx:for="{{timedGoods}}" wx:key="id">
+      <view class="goods-icon">⏰</view>
+      <view class="goods-info">
+        <view class="goods-name">{{item.name}}</view>
+        <view class="goods-desc">内含面值: {{item.rewardValue}} {{item.type === 'moral' ? '分' : '张'}}</view>
+        <view class="goods-stock">
+          限量库存: <text class="{{item.stock === 0 ? 'text-red' : 'text-green'}}">{{item.stock === -1 ? '无限量' : item.stock + ' 件'}}</text>
+        </view>
+        <view class="goods-limit" wx:if="{{item.userLimit > 0}}">
+          单人限额: <text class="{{item.userBought >= item.userLimit ? 'text-red' : 'text-green'}}">{{item.userBought || 0}}/{{item.userLimit}}</text>
+        </view>
+        <view class="goods-time" wx:if="{{!item.isReleased}}">
+          将于 {{item.releaseTime}} 开售
+        </view>
+      </view>
+      <view class="goods-action">
+        <view class="goods-price"><text class="price-num">{{item.empCost}}</text> 分</view>
+        <button class="exchange-btn {{item.disabled ? 'disabled' : ''}}" bindtap="doExchange" data-item="{{item}}">
+          {{item.btnText}}
+        </button>
+      </view>
+    </view>
+  </view>
+</view>

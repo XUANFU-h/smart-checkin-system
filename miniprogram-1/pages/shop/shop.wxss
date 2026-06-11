@@ -1,0 +1,57 @@
+page { background-color: var(--bg-color); color: var(--text-color); padding: 40rpx; box-sizing: border-box; }
+.shop-header { margin-bottom: 50rpx; text-align: center; }
+.title { font-size: 44rpx; font-weight: bold; margin-bottom: 10rpx; font-family: 'KaiTi', serif;}
+.subtitle { font-size: 28rpx; color: var(--text-muted); }
+.highlight { color: #E6A23C; font-weight: bold; font-size: 38rpx; } 
+
+.divider { display: flex; align-items: center; justify-content: center; margin: 20rpx 0 50rpx 0; }
+.divider .line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(0,0,0,0.1), transparent); }
+.divider .divider-text { margin: 0 30rpx; font-size: 28rpx; color: #F56C6C; font-weight: bold; letter-spacing: 2rpx;}
+
+.goods-grid { 
+  display: grid; 
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 30rpx; 
+  width: 100%;
+  box-sizing: border-box;
+  padding-bottom: 30rpx;
+}
+
+.goods-card { 
+  width: 100%; 
+  box-sizing: border-box; 
+  background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); 
+  border-radius: 24rpx; padding: 40rpx 20rpx; text-align: center; box-shadow: 0 10px 20px var(--glass-shadow); 
+  display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+}
+
+.goods-icon { font-size: 60rpx; margin-bottom: 15rpx; filter: drop-shadow(0 5px 10px rgba(230,162,60,0.3));}
+
+.goods-info { width: 100%; display: flex; flex-direction: column; align-items: center; margin-bottom: 25rpx;}
+.goods-name { font-size: 32rpx; font-weight: bold; color: var(--text-color); margin-bottom: 10rpx; word-break: break-all; }
+.goods-desc { font-size: 22rpx; color: var(--text-muted); margin-bottom: 6rpx;}
+.goods-stock { font-size: 22rpx; color: var(--text-muted); margin-bottom: 6rpx;}
+/* 💡 新增限购样式 */
+.goods-limit { font-size: 22rpx; color: #888; margin-bottom: 6rpx; font-weight: bold;}
+
+.text-red { color: #F56C6C; font-weight: bold;}
+.text-green { color: #07c160; font-weight: bold;}
+.goods-time { font-size: 20rpx; color: #F56C6C; background: rgba(245,108,108,0.1); padding: 4rpx 12rpx; border-radius: 8rpx; margin-top: 10rpx; font-weight: bold;}
+
+.goods-action { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 15rpx;}
+.goods-price { font-size: 22rpx; color: #E6A23C; }
+.price-num { font-size: 36rpx; font-weight: bold; font-family: monospace;}
+
+.exchange-btn { 
+  background: var(--input-bg); color: var(--text-color); border: 1px solid var(--glass-border); 
+  border-radius: 50rpx; font-size: 26rpx; transition: 0.2s; width: 90% !important; 
+  padding: 0; line-height: 64rpx; height: 64rpx; font-weight: normal;
+}
+.exchange-btn:active { background: #07c160; color: #fff;}
+
+.exchange-btn.disabled {
+  background: #e4e4e4 !important;
+  color: #999 !important;
+  border-color: #dcdcdc !important;
+  pointer-events: none;
+}

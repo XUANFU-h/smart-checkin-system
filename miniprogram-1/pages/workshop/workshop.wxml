@@ -1,0 +1,201 @@
+<view class="page-root">
+  <!-- 🔒 创意工坊暂未开放全局遮罩 -->
+  <view class="global-workshop-lock-mask" wx:if="{{workshopActiveStatus === 'closed'}}">
+    <view class="lock-panel">
+      <view class="lock-icon">🔒</view>
+      <text class="lock-title">创意工坊暂未开放</text>
+      <text class="lock-subtitle">功能正在维护或筹备中，敬请期待！</text>
+    </view>
+  </view>
+
+  <view class="header-status glass-card">
+    <view class="status-left">
+      <view class="title">🎰 学风大乐透</view>
+      <view class="subtitle" wx:if="{{!isLocked}}">今日已刷新次数: <text class="highlight">{{spinCount}}/10</text></view>
+      <view class="subtitle" wx:else>本期号码已锁定，等待揭晓</view>
+    </view>
+    <view class="status-right" bindtap="showRules">规则说明❓</view>
+  </view>
+
+  <!-- 活动未开启提示 -->
+  <view class="progress-section glass-card" wx:if="{{activeStatus === 'closed'}}" style="background: rgba(239, 68, 68, 0.05); border: 1px dashed #ef4444; margin-bottom: 20rpx;">
+    <view class="progress-header" style="justify-content: center;">
+      <text class="progress-title" style="color: #ef4444; font-size: 32rpx; font-weight: 800;">🔒 本期大乐透活动暂未开启</text>
+    </view>
+    <view class="progress-body" style="text-align: center; padding: 20rpx 0; color: #64748b; font-size: 26rpx;">
+      <text>新一期活动正在筹备中，请耐心等待管理员老师开启新玩法！</text>
+    </view>
+  </view>
+
+  <!-- 今日打卡进度雷盘 (仅在未参与入场且活动开启时显示) -->
+  <view class="progress-section glass-card" wx:if="{{spinCount === 0 && !isLocked && !isDrawTime && activeStatus === 'open'}}">
+    <view class="progress-header">
+      <text class="progress-title">🎯 今日免签打卡进度</text>
+      <text class="progress-status {{isFreeEligible ? 'status-success' : 'status-pending'}}">
+        {{isFreeEligible ? '已达成免费参与' : '未达成免费条件'}}
+      </text>
+    </view>
+    <view class="progress-body">
+      <view class="progress-bar-container">
+        <view class="progress-bar-fill" style="width: {{trackCount > 0 ? (todayCheckedInCount / trackCount) * 100 : 0}}"></view>
+      </view>
+      <view class="progress-meta">
+        <text>您已加入的赛道数: <text class="bold-text">{{trackCount}}条</text></text>
+        <text>今日已打卡数: <text class="bold-text {{todayCheckedInCount >= trackCount && trackCount > 0 ? 'text-success' : 'text-warning'}}">{{todayCheckedInCount}} / {{trackCount}}</text></text>
+      </view>
+    </view>
+  </view>
+
+  <view class="slot-machine-container">
+    <view class="machine-body glass-card {{isSpinning ? 'spinning-glow' : ''}} {{isLocked ? 'locked-glow' : ''}}">
+      <view class="machine-screen {{drawRevealed ? 'revealed-mode' : ''}}">
+        <view class="number-reel {{drawRevealed ? 'result-card' : ''}}">
+          <block wx:if="{{!drawRevealed}}">
+            <text class="num-text {{isSpinning ? 'blur-text' : ''}}">{{num1}}</text>
+          </block>
+          <block wx:else>
+            <view class="result-label">中奖情况</view>
+            <view class="result-value text-gold">{{num1}}</view>
+          </block>
+        </view>
+
+        <view class="divider" wx:if="{{!drawRevealed}}">-</view>
+
+        <view class="number-reel {{drawRevealed ? 'result-card' : ''}}">
+          <block wx:if="{{!drawRevealed}}">
+            <text class="num-text {{isSpinning ? 'blur-text' : ''}}">{{num2}}</text>
+          </block>
+          <block wx:else>
+            <view class="result-label">获得积分</view>
+            <view class="result-value text-green">{{num2}}</view>
+          </block>
+        </view>
+
+        <view class="divider" wx:if="{{!drawRevealed}}">-</view>
+
+        <view class="number-reel {{drawRevealed ? 'result-card' : ''}}">
+          <block wx:if="{{!drawRevealed}}">
+            <text class="num-text {{isSpinning ? 'blur-text' : ''}}">{{num3}}</text>
+          </block>
+          <block wx:else>
+            <view class="result-label">奖励类型</view>
+            <view class="result-value text-blue">{{num3}}</view>
+          </block>
+        </view>
+      </view>
+
+      <!-- 未开奖控制台 -->
+      <view class="machine-controls" wx:if="{{!isDrawTime}}">
+        <view class="control-tip" wx:if="{{activeStatus === 'closed'}}">
+          🔒 本期活动已圆满开奖结束，请等待管理员手动开启下一期！
+        </view>
+
+        <block wx:else>
+          <view class="control-tip" wx:if="{{isLocked}}">
+            ⏰ 本期已锁定，等待开奖时间: {{drawTimeStr}}
+          </view>
+
+          <block wx:else>
+            <!-- 1. 未入场参与 (spinCount === 0) -->
+            <view class="choice-container" wx:if="{{spinCount === 0 && !isSpinning}}">
+              <!-- 免费打卡选项 -->
+              <view class="choice-card {{isFreeEligible ? 'active-choice' : 'disabled-choice'}}" bindtap="startSpin" data-type="free">
+                <view class="choice-icon">🎯</view>
+                <view class="choice-title">打卡免签参与</view>
+                <view class="choice-desc">全部赛道今日打卡后免积分</view>
+                <view class="choice-badge {{isFreeEligible ? 'badge-active' : 'badge-disabled'}}">
+                  {{isFreeEligible ? '可免费玩' : '未完成打卡'}}
+                </view>
+              </view>
+
+              <!-- 扣分选项 -->
+              <view class="choice-card active-choice point-choice" bindtap="startSpin" data-type="points">
+                <view class="choice-icon">🪙</view>
+                <view class="choice-title">积分付费参与</view>
+                <view class="choice-desc">扣除 {{spinCost}} 赋能分即刻刷新</view>
+                <view class="choice-badge badge-points">扣{{spinCost}}分</view>
+              </view>
+            </view>
+
+            <!-- 2. 已入场但未锁定 (spinCount > 0 且 !isLocked) -->
+            <view class="spin-control-section" wx:if="{{spinCount > 0 && !isSpinning}}">
+              <button class="action-btn spin-btn" bindtap="startSpin" data-type="free">
+                🎰 免费刷新数字 (第 {{spinCount}}/10 次)
+              </button>
+              <view class="lock-btn-wrap">
+                <button class="action-btn lock-btn" bindtap="lockNumbers">
+                  🔒 锁定并封存这组号码
+                </button>
+              </view>
+            </view>
+
+            <!-- 动画状态 -->
+            <view class="btn-group" wx:if="{{isSpinning}}">
+              <button class="action-btn spin-btn disabled" disabled>正在拼命摇号中...</button>
+            </view>
+          </block>
+        </block>
+      </view>
+
+      <!-- 已开奖控制台 -->
+      <view class="machine-controls" wx:if="{{isDrawTime}}">
+         <button class="action-btn draw-btn" bindtap="playDrawAnimation" wx:if="{{!drawRevealed}}">
+            🎉 立即揭晓开奖结果
+         </button>
+         <block wx:else>
+            <view class="draw-result-text">
+               <text wx:if="{{drawPrizeName}}">🎁 恭喜您中奖: {{drawPrizeName}}</text>
+               <text wx:else>💔 本期开奖已完成，您未中大奖，谢谢参与！</text>
+            </view>
+            <button class="action-btn back-btn" bindtap="resetToSlots" style="margin-top: 20rpx;">
+               🔙 返回抽奖页面
+            </button>
+         </block>
+      </view>
+    </view>
+  </view>
+
+  <view class="broadcast-section glass-card">
+    <view class="b-title">🏆 创意摇号幸运大红榜</view>
+    <swiper 
+      class="b-swiper" 
+      vertical="true" 
+      autoplay="true" 
+      circular="true" 
+      interval="3000"
+      display-multiple-items="{{luckyRecords.length >= 3 ? 3 : luckyRecords.length}}"
+    >
+      <swiper-item wx:for="{{luckyRecords}}" wx:key="id">
+        <view class="b-item">
+          <text class="b-user">{{item.userName}}</text>
+          <text class="b-desc">锁定号码 <text class="b-num">{{item.numbers}}</text></text>
+          <text class="b-prize">{{item.prize}}</text>
+        </view>
+      </swiper-item>
+    </swiper>
+  </view>
+
+  <!-- 🏆 往期大乐透历史荣誉红榜 -->
+  <view class="history-section glass-card" style="margin-top: 40rpx;" wx:if="{{historyRecords.length > 0}}">
+    <view class="h-title">🏆 往期大乐透光荣红榜</view>
+    <scroll-view class="h-scroll" scroll-y="true">
+      <view class="h-item" wx:for="{{historyRecords}}" wx:key="index">
+        <text class="h-week">第 {{item.weekNum}} 期</text>
+        <text class="h-user">{{item.userName}}</text>
+        <text class="h-class">{{item.className}}</text>
+        <text class="h-num">{{item.numbers}}</text>
+        <text class="h-prize">{{item.prizeInfo}}</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="modal-mask {{showEasterEgg ? 'show' : ''}}">
+    <view class="modal-content glass-card egg-box">
+      <view class="egg-icon">🎰</view>
+      <view class="egg-title">天选之子！</view>
+      <view class="egg-desc">您摇出了内幕极品靓号【{{num1}}-{{num2}}-{{num3}}】</view>
+      <view class="egg-prize">系统即时奖励 200 赋能分！</view>
+      <view class="action-btn lock-btn" bindtap="closeEasterEgg">收下奖励</view>
+    </view>
+  </view>
+</view>

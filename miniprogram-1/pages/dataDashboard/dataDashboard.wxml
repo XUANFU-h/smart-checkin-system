@@ -1,0 +1,56 @@
+<view class="container">
+  <view class="glass-card">
+    <view class="glass-inner assets-board">
+      <view class="asset-item">
+        <view class="value emp">{{userInfo.empowermentScore || 0}}</view>
+        <view class="label">赋能分</view>
+      </view>
+      <view class="asset-item">
+        <view class="value moral">{{userInfo.moralScore || 0}}</view>
+        <view class="label">德育分</view>
+      </view>
+      <view class="asset-item">
+        <view class="value card">{{userInfo.makeupCards || 0}}</view>
+        <view class="label">补签卡</view>
+      </view>
+    </view>
+  </view>
+
+  <scroll-view scroll-x="true" class="rank-tabs-scroll" show-scrollbar="false">
+    <view class="rank-tabs">
+      <view class="tab {{currentTab === 'global' ? 'active' : ''}}" bindtap="switchTab" data-tab="global">📊 全系榜</view>
+      <view class="tab {{currentTab === 'class' ? 'active' : ''}}" bindtap="switchTab" data-tab="class">🏫 班级榜</view>
+      <view class="tab {{currentTab === item.id ? 'active' : ''}}" 
+            wx:for="{{myTracks}}" wx:key="id" 
+            bindtap="switchTab" data-tab="{{item.id}}">
+        {{item.name}}榜
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="glass-card flex-rank">
+    <view class="glass-inner rank-list">
+      <view class="rank-header">
+        <text class="th-rank">排名</text>
+        <text class="th-name">姓名</text>
+        <text class="th-class" wx:if="{{currentTab !== 'class'}}">班级</text>
+        <text class="th-score">昨日赋分</text>
+      </view>
+      
+      <scroll-view scroll-y="true" class="rank-scroll">
+        <view class="rank-item" wx:for="{{rankData}}" wx:key="index">
+          <view class="td-rank num-{{index + 1}}">
+            {{index === 0 ? '🥇' : (index === 1 ? '🥈' : (index === 2 ? '🥉' : index + 1))}}
+          </view>
+          <view class="td-name">{{item.display_name}}</view>
+          <view class="td-class" wx:if="{{currentTab !== 'class'}}">{{item.class_name}}</view>
+          <view class="td-score">+{{item.score}}</view>
+        </view>
+
+        <view class="empty-state" wx:if="{{rankData.length === 0}}">
+          昨日榜单正在结算中或暂无数据...
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</view>

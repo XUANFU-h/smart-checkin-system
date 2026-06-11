@@ -1,0 +1,14 @@
+<view class="pending-page">
+  <view class="icon-wrapper">
+    <image class="radar-img" src="/assets/logo.png" mode="aspectFit"></image>
+    <view class="radar-scan"></view>
+  </view>
+  
+  <view class="title">正在排队等待审核</view>
+  <view class="desc">
+    <text>您的请求已进入人工安全审计队列。</text>
+    <text>请勿退出当前页面，管理员同意后系统将自动为您放行。</text>
+  </view>
+
+  <button class="back-btn" bindtap="goBack">先去其他地方逛逛</button>
+</view>

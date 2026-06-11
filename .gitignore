@@ -1,0 +1,62 @@
+# 1. 敏感配置文件（绝对禁止上传）
+checkin/.env
+checkin/config.yaml
+
+# 2. 编译后的二进制可执行文件
+checkin/*.exe
+checkin/checkin-api
+checkin/checkin-go
+checkin/checkin_server
+checkin/checkin_srv
+checkin/main
+checkin/uploads/
+
+# 3. 前端与小程序的依赖包及打包输出
+**/node_modules/
+**/dist/
+miniprogram-1/miniprogram_npm/
+
+# 4. 编辑器与系统缓存文件
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+Thumbs.db
+.DS_Store
+
+# Upload safety rules
+**/.env
+**/.env.*
+!**/.env.example
+checkin/.env*
+!checkin/.env.example
+checkin/config.yaml
+**/*.local
+**/*secret*
+**/*private*
+
+# Runtime/build artifacts and generated exports
+*.exe
+*.log
+*.bak
+*_20260608_*
+outputs/
+scripts/node_modules/
+.tmp-go-cache/
+.tmp-go-path/
+*.sql
+*.xlsx
+*.xls
+
+# Local diagnostics
+checkin/scratch/
+checkin/scratch_*.go
+checkin/test_*.go
+
+# Local IDE/project-private metadata
+**/.idea/
+**/.vscode/
+miniprogram-1/project.private.config.json

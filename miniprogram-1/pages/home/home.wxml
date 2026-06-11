@@ -1,0 +1,116 @@
+<view class="container">
+  <view class="top-dashboard">
+    <view class="data-card glass-effect" bindtap="goToDashboard" data-tab="track">
+      <view class="card-header">
+        <text class="card-title">📊 今日数据</text>
+        <text class="arrow">></text>
+      </view>
+      <view class="card-content">
+        <view class="data-item">
+          <text class="data-label">今日进度</text>
+          <text class="data-value {{todayProgress === '已完成' ? 'text-green' : ''}}">{{todayProgress || '未完成'}}</text>
+        </view>
+        <view class="data-item">
+          <text class="data-label">全系排名</text>
+          <text class="data-value highlight-rank">{{currentRank ? 'NO.'+currentRank : '--'}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="right-actions">
+      <view class="bell-btn glass-effect" bindtap="goToMessage">
+        <view class="icon-bell"></view>
+        <view class="badge" wx:if="{{unreadCount > 0}}">{{unreadCount > 99 ? '99+' : unreadCount}}</view>
+      </view>
+      <view class="score-capsule glass-effect">
+        <view class="capsule-title">昨日</view>
+        <view class="capsule-item empower">+{{yesterdayEmpowerment}}</view>
+        <view class="capsule-item moral">+{{yesterdayMoral}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="bounty-section">
+    <view class="section-title">✨ 今日悬赏榜</view>
+    <view class="bounty-board glass-effect">
+      <view class="bounty-table">
+        <view class="table-header">
+          <view class="th col-id">序号</view>
+          <view class="th col-title">悬赏内容</view>
+          <view class="th col-score">分值</view>
+          <view class="th col-time">结束时间</view>
+        </view>
+        <scroll-view class="table-body" scroll-y="true" show-scrollbar="false">
+          <view class="empty-table-tip" wx:if="{{bounties.length === 0}}">今日暂无悬赏，去赛道里卷一下吧~</view>
+          <view class="tr" wx:for="{{bounties}}" wx:key="id" wx:if="{{bounties.length > 0}}">
+            <view class="td col-id"><text class="index-badge">{{index + 1}}</text></view>
+            <view class="td col-title">
+               <text wx:if="{{item.isPinned}}" style="color:#FF4757; margin-right:6rpx;">🔝</text>{{item.title}}
+            </view>
+            <view class="td col-score">{{item.rewardText}}</view>
+            <view class="td col-time">{{item.formattedEndTime}}</view>
+          </view>
+        </scroll-view>
+      </view>
+    </view>
+  </view>
+
+  <view class="channel-header">
+    <scroll-view class="circle-tabs" scroll-x="true" show-scrollbar="false">
+      <view class="tab-item glass-effect {{currentChannel === 'recommend' ? 'active' : ''}}" bindtap="switchTab" data-id="recommend">🌐 推荐</view>
+      <view class="tab-item glass-effect {{currentChannel === item.id ? 'active' : ''}}" 
+            wx:for="{{myTracks}}" wx:key="id" 
+            bindtap="switchTab" data-id="{{item.id}}">
+        {{item.icon}} {{item.name}}
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="post-feed">
+    <view class="empty-tip" wx:if="{{posts.length === 0}}">当前频道暂无内容~</view>
+    <view class="task glass-effect" wx:for="{{posts}}" wx:key="id">
+      <view class="tags">
+        <view class="author-box">
+          <image class="author-avatar" src="{{item.isAnonymous ? '/assets/default-avatar.png' : (item.avatarUrl || '/assets/default-avatar.png')}}" mode="aspectFill"></image>
+          <view class="author-info">
+            <view class="author-name-row">
+              <text class="author-name" style="{{item.isOfficial ? 'color:#1389eb; font-weight:900;' : ''}}">{{item.userName}}</text>
+              <text class="official-tag" wx:if="{{item.isOfficial}}">✔ 官方认证</text>
+              <text class="top-tag" wx:if="{{item.isPinned}}">🔝 置顶</text>
+            </view>
+            <view class="stats"><view class="date-box">{{item.dateStr}}</view></view>
+          </view>
+        </view>
+      </view>
+      
+      <view class="post-title" wx:if="{{item.title}}">{{item.title}}</view>
+      <view class="post-text">{{item.content}}</view>
+      <image wx:if="{{item.imageUrl}}" class="post-image" src="{{item.imageUrl}}" mode="aspectFill" catchtap="previewImage" data-url="{{item.imageUrl}}"></image>
+
+      <view class="admin-comment-block" wx:if="{{item.pushComment && !item.isOfficial}}">
+        <view class="comment-title">💎 官方评价</view>
+        <view class="comment-text">{{item.pushComment}}</view>
+      </view>
+
+      <view class="interaction-bar">
+        <view class="action-btn" bindtap="handleLike" data-id="{{item.id}}" data-index="{{index}}">
+          <image class="action-icon {{item.isLiked ? 'liked-anim' : ''}}" src="/assets/dianzan.svg" style="{{item.isLiked ? 'filter: drop-shadow(0 0 2px #FF4757) sepia(1) hue-rotate(-50deg) saturate(5);' : ''}}"></image>
+          <text>{{item.likeCount || 0}}</text>
+        </view>
+        <view class="action-btn" bindtap="openCommentModal" data-id="{{item.id}}">
+          <image class="action-icon" src="/assets/pinglun.svg"></image>
+          <text>{{item.commentCount || 0}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view style="height: 200rpx;"></view>
+</view>
+
+<view class="modal-mask" wx:if="{{showCommentModal}}" catchtap="closeCommentModal">
+  <view class="modal-content" catchtap="preventClose">
+    <view class="modal-header">发表友善评论</view>
+    <textarea class="post-textarea" placeholder="限20字以内..." maxlength="20" model:value="{{commentText}}"></textarea>
+    <button class="submit-btn" bindtap="submitComment" disabled="{{isSubmitting}}">发送评论</button>
+  </view>
+</view>

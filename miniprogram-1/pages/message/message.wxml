@@ -1,0 +1,30 @@
+<view class="container">
+  <view class="header">
+    <view class="title">🔔 消息通知</view>
+    <view class="read-all-btn" bindtap="readAll">一键已读</view>
+  </view>
+
+  <view class="msg-list" wx:if="{{messages.length > 0}}">
+    <view class="msg-card" wx:for="{{messages}}" wx:key="id">
+      <view class="unread-dot" wx:if="{{item.isRead === 0}}"></view>
+      
+      <view class="msg-top">
+        <view class="msg-title">
+          <text wx:if="{{item.type === 'system'}}">⚙️</text>
+          <text wx:elif="{{item.type === 'appeal'}}">⚖️</text>
+          <text wx:elif="{{item.type === 'bug'}}">👾</text>
+          <text wx:elif="{{item.type === 'checkin'}}">📝</text>
+          {{item.title}}
+        </view>
+        <view class="msg-time">{{item.createTime}}</view>
+      </view>
+      
+      <view class="msg-content">{{item.content}}</view>
+    </view>
+  </view>
+
+  <view class="empty-tip" wx:else>
+    <view style="font-size: 80rpx; margin-bottom: 20rpx;">📭</view>
+    <view>暂时没有收到任何消息</view>
+  </view>
+</view>

@@ -1,0 +1,85 @@
+<view class="container">
+  <view class="page-title">{{trackName}}</view>
+
+  <view class="section glass-effect">
+    <view class="section-title">昨日排行榜</view>
+    <scroll-view scroll-y class="leaderboard-scroll">
+      <view class="lb-item" wx:for="{{globalLeaderboard}}" wx:key="rank">
+        <view class="lb-left">
+          <text class="lb-rank {{index < 3 ? 'top-rank' : ''}}">{{index + 1}}</text>
+          <text class="lb-name">{{item.maskedName}}</text>
+          <text class="lb-class">{{item.className}}</text>
+        </view>
+        <text class="lb-score">+{{item.score}} ⚡</text>
+      </view>
+      <view wx:if="{{globalLeaderboard.length === 0}}" class="empty-text">昨日暂无打卡数据</view>
+    </scroll-view>
+    <view class="my-rank-bar">
+      <text>我的排名: <text class="highlight">{{myGlobalRank}}</text></text>
+      <text>获赋能分: <text class="highlight">+{{myYesterdayScore}}</text></text>
+    </view>
+  </view>
+
+  <view class="section glass-effect">
+    <view class="section-title">昨日班级排行榜</view>
+    <scroll-view scroll-y class="leaderboard-scroll">
+      <view class="lb-item" wx:for="{{classLeaderboard}}" wx:key="rank">
+        <view class="lb-left">
+          <text class="lb-rank {{index < 3 ? 'top-rank' : ''}}">{{index + 1}}</text>
+          <text class="lb-name">{{item.maskedName}}</text>
+        </view>
+        <text class="lb-score">+{{item.score}} ⚡</text>
+      </view>
+      <view wx:if="{{classLeaderboard.length === 0}}" class="empty-text">班级昨日无人参战</view>
+    </scroll-view>
+    <view class="my-rank-bar class-theme">
+      <text>我在班级的排位: <text class="highlight">{{myClassRank}}</text></text>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-title" style="margin-left: 10rpx;">我的试炼足迹</view>
+    
+    <view class="record-card glass-effect" wx:for="{{myRecords}}" wx:key="id">
+      <view class="record-header">
+        <text class="date">{{item.date}}</text>
+        <text class="score" wx:if="{{item.score}}">+{{item.score}} 赋能分</text>
+        <text class="score pending-score" wx:else>系统审核中...</text>
+      </view>
+      <view class="record-content">{{item.content || '上传了图片/文档附件'}}</view>
+      
+      <view class="record-actions">
+        <view class="action-btn edit-btn" wx:if="{{!isExpired && item.isToday}}" bindtap="editRecord" data-id="{{item.id}}">
+          ✏️ 修改
+        </view>
+        <view class="action-btn delete-btn" wx:if="{{!isExpired && item.isToday}}" bindtap="deleteRecord" data-id="{{item.id}}">
+          🗑️ 删除
+        </view>
+        
+        <view class="flex-spacer"></view>
+        <view class="action-btn" bindtap="openCommentModal" data-item="{{item}}">💬 详情</view>
+        <view class="action-btn appeal-btn" bindtap="goToAppeal">✋ 申诉</view>
+      </view>
+    </view>
+    <view wx:if="{{myRecords.length === 0}}" class="empty-text" style="margin-top: 40rpx;">暂无打卡档案</view>
+  </view>
+</view>
+
+<view class="modal-mask {{showComment ? 'show' : ''}}" bindtap="closeCommentModal">
+  <view class="modal-content glass-effect" catchtap="preventDummpy">
+    <view class="modal-header">评价档案</view>
+    <view class="comment-block">
+      <view class="comment-label ai-label">管理员评价：</view>
+      <view class="comment-val">{{currentRecord.aiComment || '暂无评价'}}</view>
+    </view>
+    <view class="comment-block">
+      <view class="comment-label admin-label">👨‍🏫 管理员批注：</view>
+      <view class="comment-val">{{currentRecord.adminComment || '无'}}</view>
+    </view>
+    <view class="comment-block">
+      <view class="comment-label self-label">🙋‍♂️ 我的复盘 (选填)：</view>
+      <textarea class="self-textarea" placeholder="在此写下50字以内的复盘心得..." maxlength="50" value="{{currentRecord.selfComment}}" bindinput="onSelfCommentInput"></textarea>
+    </view>
+    <button class="save-btn" bindtap="saveSelfComment">保存评价</button>
+  </view>
+</view>

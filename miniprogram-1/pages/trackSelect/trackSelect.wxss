@@ -1,0 +1,44 @@
+page { background-color: var(--bg-color); color: var(--text-color); padding-bottom: 200rpx; transition: 0.3s;}
+
+.header { padding: 60rpx 40rpx 40rpx; text-align: center; }
+.title { font-size: 50rpx; font-weight: bold; margin-bottom: 15rpx; font-family: 'KaiTi', serif;}
+.subtitle { font-size: 28rpx; color: var(--text-muted); }
+.highlight { color: #07c160; font-weight: bold; font-size: 34rpx; padding: 0 10rpx;}
+
+.track-grid { padding: 0 40rpx; display: flex; flex-direction: column; gap: 30rpx; }
+
+.glass-effect {
+  background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border); box-shadow: 0 10px 30px var(--glass-shadow); border-radius: 30rpx;
+}
+
+.track-card {
+  display: flex; align-items: center; padding: 40rpx; position: relative;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); border: 2px solid transparent;
+}
+.track-card.active {
+  background: rgba(7, 193, 96, 0.1); border-color: #07c160; transform: scale(1.02);
+}
+
+.track-icon { font-size: 80rpx; margin-right: 30rpx; }
+.track-info { flex: 1; }
+.track-name { font-size: 34rpx; font-weight: bold; margin-bottom: 10rpx; }
+.track-desc { font-size: 24rpx; color: var(--text-muted); line-height: 1.4; }
+
+.check-circle {
+  position: absolute; right: 40rpx; width: 50rpx; height: 50rpx;
+  background: #07c160; color: #fff; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-weight: bold;
+}
+
+.footer {
+  position: fixed; bottom: 0; left: 0; width: 100%; padding: 40rpx; box-sizing: border-box;
+  display: flex; justify-content: space-between; align-items: center; border-radius: 40rpx 40rpx 0 0;
+  border-bottom: none; z-index: 10;
+}
+.count-tip { font-size: 30rpx; font-weight: bold; }
+.submit-btn { 
+  margin: 0; background: var(--input-bg); color: var(--text-muted); 
+  border-radius: 50rpx; font-size: 30rpx; width: 340rpx; transition: 0.3s;
+}
+.submit-btn.ready { background: #07c160; color: #fff; box-shadow: 0 5px 15px rgba(7,193,96,0.4); }

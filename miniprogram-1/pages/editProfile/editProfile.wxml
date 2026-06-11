@@ -1,0 +1,58 @@
+<view class="container">
+  <view class="form-title">修改个人资料</view>
+  
+  <view class="login-form glass-effect">
+    <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+      <image class="avatar" src="{{userInfo.avatar || '/assets/default-avatar.png'}}"></image>
+    </button>
+    <view class="tip-text">点击修改微信头像</view>
+
+    <view class="input-group">
+      <text class="label">真实姓名 (已锁定)</text>
+      <input type="text" class="glass-input disabled-input" value="{{userInfo.realName}}" disabled="true"/>
+    </view>
+    
+    <view class="input-group">
+      <text class="label">班级 (已锁定)</text>
+      <input type="text" class="glass-input disabled-input" value="{{userInfo.className}}" disabled="true"/>
+    </view>
+
+    <view class="input-group">
+      <text class="label">学号 (已锁定)</text>
+      <input type="number" class="glass-input disabled-input" value="{{userInfo.studentId}}" disabled="true"/>
+    </view>
+
+    <view class="security-menu">
+      <view class="menu-item" bindtap="goToSecurityPage">
+        <text>修改密码</text>
+        <text class="arrow">></text>
+      </view>
+      <view class="menu-item" bindtap="goToSecurityPage">
+        <text>忘记密码</text>
+        <text class="arrow">></text>
+      </view>
+    </view>
+
+    <button class="submit-btn" bindtap="saveProfile">仅保存头像</button>
+    <button class="logout-btn" bindtap="logout">退出登录</button>
+    <button class="cancel-account-btn" bindtap="showCancelModal">注销账号</button>
+  </view>
+
+  <view class="modal-overlay" wx:if="{{showCancelModal}}">
+    <view class="modal-content glass-effect">
+      <view class="modal-title">⚠️ 风险警告</view>
+      <view class="modal-desc">注销账号后，您的所有打卡记录、赋能分、德育分及身份信息将被永久抹除且无法恢复！</view>
+      
+      <view class="cancel-pwd-box" wx:if="{{countdown === 0}}">
+        <input type="password" class="glass-input" placeholder="请输入登录密码以确认身份" bindinput="handleCancelPwdInput" value="{{cancelPassword}}"/>
+      </view>
+
+      <view class="modal-actions">
+        <button class="modal-btn cancel" bindtap="hideCancelModal">我再想想</button>
+        <button class="modal-btn confirm {{countdown > 0 ? 'disabled' : ''}}" bindtap="confirmCancelAccount" disabled="{{countdown > 0}}">
+          确认注销 {{countdown > 0 ? '(' + countdown + 's)' : ''}}
+        </button>
+      </view>
+    </view>
+  </view>
+</view>

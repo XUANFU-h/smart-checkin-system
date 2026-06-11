@@ -1,0 +1,14 @@
+<view class="container">
+  <view class="header">
+    <text class="title">选择你的赛道</text>
+    <text class="subtitle">今天你想完成哪项挑战？</text>
+  </view>
+
+  <view class="track-list">
+    <view class="track-card glass-effect" wx:for="{{tracks}}" wx:key="id" bindtap="goToCheckin" data-id="{{item.id}}" data-name="{{item.name}}">
+      <view class="track-name">{{item.name}}</view>
+      <view class="track-desc">{{item.description}}</view>
+      <view class="arrow">></view>
+    </view>
+  </view>
+</view>

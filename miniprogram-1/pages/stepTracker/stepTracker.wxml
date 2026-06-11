@@ -1,0 +1,32 @@
+<view class="tracker-container">
+  <view class="map-wrap">
+    <map id="sportMap" class="sport-map" latitude="{{latitude}}" longitude="{{longitude}}" polyline="{{polylines}}" show-location="true"></map>
+    
+    <view class="locate-btn glass-effect" bindtap="moveToLocation">
+      <text class="icon-target">📍</text>
+    </view>
+  </view>
+
+  <view class="data-dashboard glass-effect">
+    <view class="data-item"><text class="data-val">{{distance}}</text><text class="data-label">公里</text></view>
+    <view class="data-item"><text class="data-val">{{duration}}</text><text class="data-label">运动时长</text></view>
+    <view class="data-item"><text class="data-val">{{sessionSteps}}</text><text class="data-label">实测步数</text></view>
+    <view class="data-item"><text class="data-val">{{wechatSteps}}</text><text class="data-label">微信总步</text></view>
+  </view>
+
+  <view class="control-panel">
+    <view class="main-btn-wrap" 
+          bindtap="onBtnTap" 
+          bindtouchstart="onBtnTouchStart" 
+          bindtouchend="onBtnTouchEnd" 
+          bindtouchcancel="onBtnTouchEnd">
+      
+      <view class="progress-ring" style="--p: {{progress}}%;"></view>
+      
+      <view class="btn-core {{status}}">
+        <text class="btn-txt">{{statusText}}</text>
+        <text class="btn-sub" wx:if="{{status === 'running'}}">长按结束</text>
+      </view>
+    </view>
+  </view>
+</view>

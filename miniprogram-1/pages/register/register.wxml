@@ -1,0 +1,68 @@
+<view class="login-page">
+<view class="container">
+  
+  <view class="header-area move-up">
+    <image class="quantum-logo" src="/assets/logo.png" mode="aspectFit"></image>
+    <view class="splash-title-zh">用户注册</view>
+    <view class="form-desc">请填写真实信息</view>
+  </view>
+
+  <view class="login-card glass-effect fade-in">
+
+    <view class="avatar-uploader-container">
+      <button class="avatar-wrapper" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+        <image class="upload-preview-img" src="{{avatarUrl || 'data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAyNCAxMDI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48cGF0aCBkPSJNOTI4IDg5Nkg5NmMtMTcuNjggMC0zMi0xNC4zMi0zMi0zMlYxNjBjMC0xNy42OCAxNC4zMi0zMiAzMi0zMmg4MzJjMTcuNjggMCAzMiAxNC4zMiAzMiAzMnY3MDQzYzA3IDE3LjY4LTE0LjMyIDMyLTMyIDMyeiBNOTYgMTkydjY0MGg4MzJWMTkySDk2eiIgZmlsbD0iI2I0YjRiNCIvPjxwYXRoIGQ9Ik0zODQgNDQ4Yzg4LjM2NiAwIDE2MC03MS42MzQgMTYwLTE2MFMzODQgMTI4IDIyNCAxMjhTMiI1IDE5MiAzODQgNDQ4eiBNMzg0IDE5MmM1Mi45OTggMCA5NiA0My4wMDIgOTYgOTZzLTQzLjAwMiA5Ni05NiA5Ni05Ni00My4wMDItOTYtOTYgNDMuMDAyLTk2IDk2LTk2eiBNODY0IDgzMkgxNjB2LTk2YzAtMTMyLjM0IDIwMy42Ni0yNDAgNDQ4LTI0MHMyNTYgMTA3LjY2IDI1NiAyNDB2OTZ6TDI0MCA3NjhoNTY0Yy0yMC4xNTQtNjQuMzQ2LTEzNS40Ny0xNDQtMjg0LTE0NFMyNjAuMTU0IDcwMy42NTQgMj0wIDY2OHoiIGZpbGw9IiNiNGI0YjQiLz48L3N2Zz4='}}" mode="aspectFill"></image>
+        <view class="avatar-hint">设置头像</view>
+      </button>
+    </view>
+
+    <input type="text" class="neu-input" placeholder="姓名" placeholder-class="placeholder-color" value="{{realName}}" bindinput="handleInput" data-field="realName" autocomplete="off" />
+
+    <view class="neu-input pseudo-input {{classFocus ? 'active' : ''}} {{!className ? 'placeholder-color' : ''}}" bindtap="openClassPicker">
+      {{className || '班级'}}
+      <text class="arrow-down-new"></text>
+    </view>
+
+    <input type="number" maxlength="10" class="neu-input" placeholder="学号" placeholder-class="placeholder-color" value="{{studentId}}" bindinput="handleInput" data-field="studentId" autocomplete="off" />
+
+    <input type="password" class="neu-input" placeholder="设置登录密码" placeholder-class="placeholder-color" value="{{password}}" bindinput="handleInput" data-field="password" autocomplete="off" />
+
+    <input type="password" class="neu-input" placeholder="再次确认密码" placeholder-class="placeholder-color" value="{{confirmPassword}}" bindinput="handleInput" data-field="confirmPassword" autocomplete="off" />
+
+    <view class="captcha-row">
+      <view class="captcha-group">
+        <input type="text" class="neu-input" placeholder="算数结果" placeholder-class="placeholder-color" value="{{captchaAnswer}}" bindinput="handleInput" data-field="captchaAnswer" autocomplete="off" />
+      </view>
+      <view class="captcha-box" bindtap="refreshCaptcha">
+        <image wx:if="{{captchaImage}}" src="{{captchaImage}}" class="captcha-img"></image>
+        <text wx:else class="captcha-placeholder">获取中</text>
+      </view>
+    </view>
+
+    <button class="submit-btn {{isSubmitting ? 'submitting' : ''}}" bindtap="submitRegister">
+      <block wx:if="{{isSubmitting}}">
+        <view class="btn-dot-loader"><text></text><text></text><text></text></view>
+      </block>
+      <block wx:else>立即注册并登录</block>
+    </button>
+
+    <view class="auth-links">
+      <text class="back-login" bindtap="goToLogin">已有账号？返回登录</text>
+    </view>
+  </view>
+</view>
+
+<view class="picker-overlay {{showClassPicker ? 'show' : ''}}" bindtap="closeClassPicker">
+  <view class="picker-content" catchtap="preventClose">
+    <view class="picker-header">
+      <text class="picker-title">请选择您的所属班级</text>
+      <text class="picker-close" bindtap="closeClassPicker">×</text>
+    </view>
+    <scroll-view scroll-y class="picker-list">
+      <view wx:for="{{classList}}" wx:key="*this" class="picker-item {{className === item ? 'is-active' : ''}}" data-class="{{item}}" bindtap="selectClass">
+        {{item}}
+      </view>
+    </scroll-view>
+  </view>
+</view>
+</view>

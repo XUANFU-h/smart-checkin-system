@@ -1,0 +1,61 @@
+page {
+  background-color: #121212;
+  color: #fff;
+  padding: 40rpx;
+  box-sizing: border-box;
+}
+
+.header {
+  margin-bottom: 60rpx;
+  margin-top: 40rpx;
+}
+
+.title {
+  font-size: 56rpx;
+  font-weight: bold;
+  display: block;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  color: #aaaaaa;
+  margin-top: 10rpx;
+  display: block;
+}
+
+.track-card {
+  padding: 40rpx;
+  margin-bottom: 30rpx;
+  border-radius: 24rpx;
+  position: relative;
+}
+
+/* 毛玻璃复用 */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.track-name {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #07c160; /* 微信绿点缀 */
+  margin-bottom: 16rpx;
+}
+
+.track-desc {
+  font-size: 26rpx;
+  color: #cccccc;
+  line-height: 1.5;
+  width: 90%;
+}
+
+.arrow {
+  position: absolute;
+  right: 40rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+  font-size: 40rpx;
+}

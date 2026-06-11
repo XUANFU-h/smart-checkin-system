@@ -1,0 +1,53 @@
+<view class="container">
+  <!-- 1. 首次登录绑定界面 -->
+  <!-- 首次登录绑定微信物理双因子已旁路移除
+  <view class="binding-mask" wx:if="{{!isBound}}">
+    <view class="lock-icon" style="font-size: 110rpx; margin-bottom: 30rpx;">🔒</view>
+    <view class="bind-title">物理双因子安全网关死锁</view>
+    <view class="bind-desc">检测到最高指挥官入口被唤醒。为了防止控制权外泄，首次进入必须扫描Web端运维大盘的动态二维码进行二次互信绑定。</view>
+    
+    <view class="form-group box-glass">
+      <button class="scan-btn" bindtap="handleScanQr">
+        {{mfaToken ? '✅ 绑定特征码已录入' : '📷 扫描网页端动态二维码'}}
+      </button>
+      <input class="key-input" type="text" placeholder="请输入8位大写特征绑定密钥..." placeholder-style="color:rgba(255,255,255,0.4);" bindinput="handleKeyInput" value="{{passKey}}"/>
+    </view>
+    
+    <button class="submit-lock-btn" bindtap="executeMfaBinding">一键核准微信安全互信绑定</button>
+  </view>
+  -->
+
+  <!-- 2. 指挥干预中枢大盘 -->
+  <view class="admin-panel" wx:if="{{isBound}}">
+    <view class="panel-header">
+      <view class="admin-badge">👑 STUDENT COMMANDER</view>
+      <view class="panel-title">系统最高特权干预中枢</view>
+    </view>
+
+    <!-- 📊 动态赛道数据 Bar 直方图 -->
+    <view class="card box-glass">
+      <view class="card-label">📊 今日四大赛道打卡数据实时遥测</view>
+      <view class="track-chart-list">
+        <view class="chart-row" wx:for="{{trackStats}}" wx:key="name">
+          <text class="chart-name">{{item.name}}</text>
+          <view class="chart-bar-container">
+            <view class="chart-bar" style="{{ 'width: ' + item.percent + '%; background: ' + item.color + ';' }}"></view>
+          </view>
+          <text class="chart-val">{{item.count}}人 ({{item.percent}}%)</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 微信小程序扫码授权与远程会话管理已精简注释
+    <view class="card box-glass text-center">
+      <view class="card-label">📲 智能带外扫码登录 Web 平台</view>
+      <button class="scan-login-btn" bindtap="handleScanLogin">📷 扫码授权登入管理平台</button>
+    </view>
+
+    <view class="card box-glass text-center">
+      <view class="card-label">🔒 控制台会话审计安全阻断</view>
+      <button class="logout-web-btn" bindtap="executeRemoteLogout">远程切断 Web 平台登录态</button>
+    </view>
+    -->
+  </view>
+</view>

@@ -1,0 +1,78 @@
+<view class="container">
+  <view class="music-btn {{isPlaying ? 'rotating' : ''}}" bindtap="toggleMusic">🎵</view>
+
+  <swiper class="summary-swiper" vertical="true" current="{{currentIndex}}" bindchange="onSwiperChange">
+    
+    <!-- 第一页：开篇语 -->
+    <swiper-item>
+      <view class="page-content slide-in">
+        <view class="title">学风档案</view>
+        <view class="text">2026�?�?8�?/view>
+        <view class="text">你带着满腔热血加入了学风建设月</view>
+        <view class="text highlight">开启了属于你的试炼之路...</view>
+        <view class="arrow-down">向上滑动继续 ⬆️</view>
+      </view>
+    </swiper-item>
+
+    <!-- 第二页：AI 总体评价 (来自打卡提交时的清算数据) -->
+    <swiper-item wx:if="{{summaryData}}">
+      <view class="page-content fade-in">
+        <view class="title" style="color: #409EFF; font-size: 50rpx;">试炼总结</view>
+        <view class="text">在过去的 <text style="color: #E6A23C; font-size: 40rpx; font-weight: bold;">{{summaryData.totalDays}}</text> 天里</view>
+        <view class="text">你最钟爱的赛道是【{{summaryData.highestTrack}}�?/view>
+        <view class="text">累计获得�?<text style="color: #07c160; font-size: 40rpx; font-weight: bold;">{{summaryData.totalScore}}</text> 赋能�?/view>
+        
+        <view class="text italic" style="margin-top: 60rpx; font-size: 28rpx; color: #aaa; text-align: left; padding: 0 40rpx; border-left: 6rpx solid #07c160;">
+          "{{summaryData.aiEvaluation}}"
+        </view>
+        <view class="arrow-down">向上滑动回忆 ⬆️</view>
+      </view>
+    </swiper-item>
+
+    <!-- 中间页：照片回忆�?-->
+    <swiper-item wx:for="{{memories}}" wx:key="id">
+      <view class="page-content fade-in">
+        <view class="date-tag">{{item.date}}</view>
+        <image src="http://127.0.0.1:8080{{item.imageUrl}}" class="memory-img" mode="aspectFill"></image>
+        <view class="text">在【{{item.trackName}}】赛道上</view>
+        <view class="text italic">"{{item.aiComment}}"</view>
+        <view class="arrow-down">⬆️</view>
+      </view>
+    </swiper-item>
+
+    <!-- 最后一页：清算商店 -->
+    <swiper-item>
+      <view class="page-content lock-screen">
+        <view class="warning-box">
+          <view class="warning-title">⚠️ 旅程已结束，系统自动锁死</view>
+          <view class="warning-desc">您已完成最终试炼。我们将在近日永久关闭服务器，请在此之前，使用您的赋能分兑换奖励并截图保留凭证�?/view>
+        </view>
+
+        <view class="score-board">
+          <view class="score-item">
+            <text>剩余赋能�?/text>
+            <text class="score-val emp">{{empowermentScore}}</text>
+          </view>
+          <view class="score-item">
+            <text>当前德育�?/text>
+            <text class="score-val moral">{{moralScore}}</text>
+          </view>
+        </view>
+
+        <view class="shop-box">
+          <view class="shop-title">最终清算驿�?/view>
+          <view class="goods-list">
+            <!-- 💡 修复：字段名改为 item.name -->
+            <view class="goods-item" wx:for="{{goodsList}}" wx:key="id" bindtap="doExchange" data-item="{{item}}">
+              <view class="g-name">{{item.name}}</view>
+              <view class="g-cost">消�?{{item.empCost}} 赋能�?/view>
+            </view>
+          </view>
+        </view>
+        
+        <view class="end-text">致敬每一位坚持的同学</view>
+      </view>
+    </swiper-item>
+
+  </swiper>
+</view>

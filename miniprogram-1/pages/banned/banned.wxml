@@ -1,0 +1,56 @@
+<view class="banned-container">
+  <view class="banned-card glass-effect {{banType === 'blacklisted' ? 'theme-blacklisted' : ''}} {{banType === 'device_locked' ? 'theme-device' : ''}} {{banType === 'cancelling' ? 'theme-cancelling' : ''}}">
+    
+    <view class="icon-warning" wx:if="{{banType === 'device_locked'}}">📱</view>
+    <view class="icon-warning" wx:elif="{{banType === 'cancelling'}}">⏳</view>
+    <view class="icon-warning" wx:elif="{{banType === 'blacklisted'}}">☠️</view>
+    <view class="icon-warning" wx:else>🚫</view>
+
+    <view class="banned-title">{{titleStr}}</view>
+    <view class="divider"></view>
+
+    <block wx:if="{{banType === 'temporary'}}">
+      <view class="banned-subtitle">您的账号已被临时封禁</view>
+      <view class="countdown-box">
+        <view class="countdown-label">距离解封还有</view>
+        <view class="countdown-time">{{countdownStr}}</view>
+      </view>
+      <view class="banned-desc">封禁期间，您的所有操作权限已被限制。</view>
+    </block>
+
+    <block wx:elif="{{banType === 'permanent'}}">
+      <view class="banned-subtitle">您已被永久封号</view>
+      <view class="banned-desc">该账号存在严重违规行为，所有功能权限已被永久剥夺，数据已强制冻结。</view>
+    </block>
+
+    <block wx:elif="{{banType === 'blacklisted'}}">
+      <view class="banned-subtitle">系统黑名单拦截</view>
+      <view class="banned-desc">检测到严重违规或危害系统安全的行为，该账号绑定的身份已被列入系统黑名单，永久拒绝服务。</view>
+    </block>
+
+    <block wx:elif="{{banType === 'device_locked'}}">
+      <view class="banned-subtitle">多设备挤占警告</view>
+      <view class="banned-desc">您的账号当前正在另一台设备上活跃。为保障数据安全，当前设备已被强制阻断连接。</view>
+    </block>
+
+    <block wx:elif="{{banType === 'cancelling'}}">
+      <view class="banned-subtitle">账号注销审核中</view>
+      <view class="banned-desc">您的账号正在注销流程中，进入静默挂起状态。管理员审核通过后，全部数据将被永久抹除。</view>
+    </block>
+
+    <view class="reason-box" wx:if="{{banReason && banType !== 'cancelling'}}">
+      <view class="reason-label">拦截事由</view>
+      <view class="reason-text">{{banReason}}</view>
+    </view>
+
+    <view class="action-btn-group">
+      <block wx:if="{{banType === 'cancelling'}}">
+        <button class="action-btn appeal-btn" bindtap="handleWithdrawCancel">撤销注销申请 (恢复账号)</button>
+      </block>
+
+      <button class="action-btn logout-btn" bindtap="handleLogout">退出小程序 / 返回登录页</button>
+    </view>
+
+    <view class="footer-tips" wx:if="{{banType !== 'blacklisted'}}">如有疑问请联系系统管理员</view>
+  </view>
+</view>
